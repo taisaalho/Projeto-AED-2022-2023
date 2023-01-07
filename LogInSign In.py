@@ -1,7 +1,7 @@
 from tkinter import *
 import tkinter as tk
 from PIL import Image,ImageTk
-from tkvideo import tkvideo
+""" from tkvideo import tkvideo """
 from tkinter import ttk
 from tkinter import messagebox
 
@@ -10,7 +10,7 @@ from tkinter import messagebox
 window = Tk()
 window.title("GamePick")  #Nome da Aplicação
 window.resizable(0,0)
-window.iconbitmap("assets\\Design sem nome.png") #Não dá,não sei porquê
+window.iconbitmap("./assets/design.png") #Não dá,não sei porquê
 window.configure(bg = "NavajoWhite2") 
 
 #Tamanho e localização da Window

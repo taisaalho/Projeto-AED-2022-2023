@@ -1,7 +1,7 @@
 from tkinter import *
 import tkinter as tk
 from PIL import Image,ImageTk
-from tkvideo import tkvideo
+""" from tkvideo import tkvideo """
 from tkinter import ttk
 from tkinter import messagebox
 
@@ -44,9 +44,6 @@ barraNav.add_command(label = "Home", command = "")
 barraNav.add_command(label = "Games", command = "")
 barraNav.add_command(label = "User", command = "")
 barraNav.add_command(label = "Notifications", command = "")
-barraNav.add_command(label = "DashBoard", command = "")
-barraNav.add_command(label = "Game's Mannagement", command = "") #É assim que se escreve?
-barraNav.add_command(label = "User's Mannagement", command = "")
 barraNav.add_command(label = "Quit", command = "window.quit")
 
 window.configure(menu = barraNav)
