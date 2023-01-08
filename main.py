@@ -57,42 +57,38 @@ def userProfile():
 
 def loginOrRegister():
     def register():
-        warning = ""
         check_counter=0
-        if txtRepeatPassword.get() == "":
-            warning = "Confirmar password não pode estar vazia!"
-        else:
-            check_counter += 1
-
-        if txtPassword.get() == "":
-            warning = "Password não pode estar vazia!"
-        else:
-            check_counter += 1
-
-        if txtEmail.get() == "":
-            warning = "Email não pode estar vazio!"
-        else:
-            check_counter += 1
-
-        if txtUsername.get() == "":
-            warning = "Nome não pode estar vazio!"
-        else:
-            check_counter += 1
-
-        if txtPassword.get() != txtRepeatPassword.get():
-            print(txtPassword.get())
-            print(txtRepeatPassword.get())
-            
-            warning = "Passwords não coicidem!"
-        else:
-            check_counter += 1
-            
+        warn = ""
         data = []
         with open('./data/users.txt',mode='r+', encoding="utf-8")as file:
             for line in file:
                 data = line.strip().split(';')  
         if  len(data) > 0 and txtEmail.get() == data[1]:
-            warning = "Email já existe!"
+            warn = "Email já existe!"
+        else:
+            check_counter += 1
+        if txtRepeatPassword.get() == "":
+            warn = "Confirmar password não pode estar vazia!"
+        else:
+            check_counter += 1
+
+        if txtPassword.get() == "":
+            warn = "Password não pode estar vazia!"
+        else:
+            check_counter += 1
+
+        if txtEmail.get() == "":
+            warn = "Email não pode estar vazio!"
+        else:
+            check_counter += 1
+
+        if txtUsername.get() == "":
+            warn = "Nome não pode estar vazio!"
+        else:
+            check_counter += 1
+
+        if txtPassword.get() != txtRepeatPassword.get():
+            warn = "Passwords não coicidem!"
         else:
             check_counter += 1
 
@@ -104,12 +100,18 @@ def loginOrRegister():
                 file.write("\n")
                 file.close()
                 messagebox.showinfo('confirmation', 'Registo efetuado com sucesso!')
-
+                
+                
+                #What to do next?#
                     
             except Exception as ep:
+                
                 messagebox.showerror('Erro!', ep) 
+                
+
         else:
-            messagebox.showerror('Erro!', warning)
+            
+            messagebox.showerror('Erro!', warn)
     #Sign In
     frameSignIn = LabelFrame(window, text = "Sign In",width = 460, height = 500, font = ("Arial",10))
     frameSignIn.place(x = 20 , y = 40)
@@ -144,12 +146,12 @@ def loginOrRegister():
             with open('./data/users.txt',mode='r+', encoding="utf-8")as file:
                 for line in file:
                     data = line.strip().split(';')  
-                    if  len(data) > 0 and uname == data[1]:
-                        username = data[1]
+                    if  len(data) > 0 and uname == data[0]:
+                        username = data[0]
                         pwd = data[2]
                         check_counter += 1
                     else:
-                        warn = "Email não existe!"
+                        warn = "Username não existe!"
         except Exception as ep:
             messagebox.showerror('Erro!', ep)
         if upwd == "":
