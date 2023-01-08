@@ -129,8 +129,8 @@ def loginOrRegister():
 
     txtUsername = Entry(frameSignIn,width = 30)
     txtEmail = Entry(frameSignIn,width = 30)
-    txtPassword = Entry(frameSignIn,width = 30)
-    txtRepeatPassword = Entry(frameSignIn,width = 30)
+    txtPassword = Entry(frameSignIn,show="*",width = 30)
+    txtRepeatPassword = Entry(frameSignIn,show="*",width = 30)
     txtUsername.place(x = 150, y = 62)
     txtEmail.place(x = 150, y = 112) 
     txtPassword.place(x = 150, y = 162)
@@ -192,7 +192,7 @@ def loginOrRegister():
     lblPassword.place(x = 50, y = 98)
 
     txtUsernameLogin = Entry(frameLogIn,width = 30)
-    txtPasswordLogin = Entry(frameLogIn,width = 30)
+    txtPasswordLogin = Entry(frameLogIn,show="*",width = 30)
     txtUsernameLogin.place(x = 150, y = 62)
     txtPasswordLogin.place(x = 150, y = 100)
 
@@ -256,14 +256,13 @@ def admin():
             text = "Games",
             font=f, 
             cursor='hand2',
-            command = lambda:[roteiros(), menu_frame.place_forget()])
+            command = lambda:[games(), menu_frame.place_forget()])
         places_btn = Button(
             menu_frame,
             width=12,
             text = "Notifications",
             font=f, 
-            cursor='hand2',
-            command = lambda:[locais(), menu_frame.place_forget()])
+            cursor='hand2')
         
         voltar_atras_btn = Button(
             menu_frame,
@@ -272,7 +271,7 @@ def admin():
             font=f, 
             
             cursor='hand2',
-            command = voltar_atras
+            command = home
         )
         
         button_exit = Button(
@@ -431,7 +430,7 @@ def admin():
             cursor='hand2',
             command=criar_categoria
         )
-        apagar_btn = Button(
+        delete_btn = Button(
             category_frame, 
             width=15, 
             text='Delete', 
@@ -440,7 +439,7 @@ def admin():
             cursor='hand2',
             command=apagar_categoria
         )
-        mostrar_btn = Button(
+        showBtn = Button(
             category_frame, 
             width=15, 
             text='Refresh', 
@@ -463,15 +462,15 @@ def admin():
     
         category_name.grid(row=0, column=1, pady=10, padx=20)
         create_category.grid(row=1, column=1, pady=10, padx=20)
-        mostrar_btn.grid(row=1, column=0, pady=10, padx=20)
-        apagar_btn.grid(row=2, column=1, pady=10, padx=20)
+        showBtn.grid(row=1, column=0, pady=10, padx=20)
+        delete_btn.grid(row=2, column=1, pady=10, padx=20)
         
         back_btn.grid(row = 2, column = 0, padx = 10, pady = 20)
         category_frame.place(relx=0.3, rely=0.5, anchor= CENTER)
         main_categoria_frame.place(relx=0, rely=0)
 
     def administradores():
-        def criar_administradores():
+        def createAdmin():
             check_counter=0
             warn = ""
             if pwd_again.get() == "":
@@ -526,7 +525,7 @@ def admin():
             else:
                 messagebox.showerror('Erro!', warn)
 
-        def mostrar_administradores():
+        def showAdmin():
             try:  
                 tree.delete(*tree.get_children())
                 erro = False
@@ -538,7 +537,7 @@ def admin():
             except Exception as ep:
                 messagebox.showwarning('Admin', ep)
 
-        def apagar_administradores():
+        def deleteAdmin():
             curItem = tree.focus()
             tree_data =  tree.item(curItem)["values"]
             user_line = []
@@ -663,23 +662,23 @@ def admin():
             font=f,
             show='*'
         )
-        mostrar_btn = Button(
+        showBtn = Button(
             users_frame, 
             width=15, 
             text='Mostar', 
             font=f, 
         
             cursor='hand2',
-            command=mostrar_administradores
+            command=showAdmin
         )
-        apagar_btn = Button(
+        delete_btn = Button(
             users_frame, 
             width=15, 
             text='Apagar', 
             font=f, 
         
             cursor='hand2',
-            command=apagar_administradores
+            command=deleteAdmin
         )
     
         register_btn = Button(
@@ -689,7 +688,7 @@ def admin():
             font=f, 
         
             cursor='hand2',
-            command=criar_administradores
+            command=createAdmin
         )
         back_btn = Button(
             users_frame, 
@@ -705,13 +704,13 @@ def admin():
         register_pwd.grid(row=5, column=1, pady=10, padx=20)
         pwd_again.grid(row=6, column=1, pady=10, padx=20)
         register_btn.grid(row=7, column=1, pady=10, padx=20)
-        mostrar_btn.grid(row=7, column=0, pady=10, padx=20)
-        apagar_btn.grid(row=8, column=1, pady=10, padx=20)
+        showBtn.grid(row=7, column=0, pady=10, padx=20)
+        delete_btn.grid(row=8, column=1, pady=10, padx=20)
         back_btn.grid(row=8, column=0, pady=10, padx=20)
         users_frame.place(relx=0.03, rely=0.15)
         main_users_frame.place(relx=0, rely=0)
 
-    def roteiros():
+    def games():
         def browseFiles():
             filename = filedialog.askopenfilename(  initialdir = "./imagens",
                                                 title = "Select a File",
@@ -722,7 +721,7 @@ def admin():
                                                         ])
             imagem.insert(0,filename)
 
-        def criar_roteiro():
+        def createGame():
             print(value_inside)
             check_counter=0
             warn = ""
@@ -773,7 +772,7 @@ def admin():
             else:
                 messagebox.showerror('Erro', warn)
         
-        def mostrar_roteiro():
+        def show_game():
             try:  
                 tree.delete(*tree.get_children())
                 erro = False
@@ -784,7 +783,7 @@ def admin():
             except Exception as ep:
                 messagebox.showwarning('Admin', ep)
 
-        def apagar_roteiro():
+        def delete_game():
             curItem = tree.focus()
             tree_data =  tree.item(curItem)["values"]
             rot_line = []
@@ -822,7 +821,7 @@ def admin():
             else:
                 messagebox.showerror('Erro', warn)
 
-        def atualizar_roteiro():
+        def att_game():
             curItem = tree.focus()
             tree_data =  tree.item(curItem)["values"]
             rot_line = [] 
@@ -872,14 +871,14 @@ def admin():
             else:
                 messagebox.showerror('Erro', warn)
         # Roteiro
-        main_roteiro_frame = Frame (
+        main_game_frame = Frame (
             ws, 
             bg='#fff',
             width=app_width, 
             height=app_height
         )
-        roteiro_frame = Frame(
-            main_roteiro_frame, 
+        game_frame = Frame(
+            main_game_frame, 
             bd=2, 
             bg='#CCCCCC',   
             relief=SOLID, 
@@ -888,7 +887,7 @@ def admin():
             )
 
         tree = ttk.Treeview(
-            main_roteiro_frame, 
+            main_game_frame, 
         columns = ("Titulo", "Descrição", "Imagem", "Categoria"), 
         show = "headings", 
         height=18
@@ -905,48 +904,48 @@ def admin():
         tree.place(relx= 0.55, rely=0.1)
 
         Label(
-            roteiro_frame, 
+            game_frame, 
             text="Título", 
             bg='#CCCCCC',
             font=f
             ).grid(row=0, column=0, pady=10)
 
         Label(
-            roteiro_frame, 
+            game_frame, 
             text="Descrição", 
             bg='#CCCCCC',
             font=f
             ).grid(row=1, column=0, pady=10)
 
         Label(
-            roteiro_frame, 
+            game_frame, 
             text="Imagem", 
             bg='#CCCCCC',
             font=f
             ).grid(row=5, column=0, pady=10)
 
         Label(
-            roteiro_frame, 
+            game_frame, 
             text="Categoria", 
             bg='#CCCCCC',
             font=f
             ).grid(row=6, column=0, pady=10)
 
         titulo = Entry(
-            roteiro_frame, 
+            game_frame, 
             font=f
             )
 
         descricao = Entry(
-            roteiro_frame, 
+            game_frame, 
             font=f,
         ) 
         imagem = Entry(
-            roteiro_frame,
+            game_frame,
             font=f,  
         ) 
         imagem_btn = Button(
-            roteiro_frame,
+            game_frame,
             text = "Imagem",
             command = browseFiles) 
         # Create the list of options
@@ -958,64 +957,64 @@ def admin():
                             options_list.append(data[0])
         # Variable to keep track of the option
         # selected in OptionMenu
-        value_inside = StringVar(roteiro_frame)
+        value_inside = StringVar(game_frame)
         
         # Set the default value of the variable
         value_inside.set("Select category")
         
         # Create the optionmenu widget and passing 
         # the options_list and value_inside to it.
-        cbCategories = Combobox(roteiro_frame, values = options_list,textvariable=value_inside).grid(row=6, column=1, pady=10)
+        cbCategories = Combobox(game_frame, values = options_list,textvariable=value_inside).grid(row=6, column=1, pady=10)
         
 
         categoria = Entry(
-            roteiro_frame, 
+            game_frame, 
             font=f,
         )
-        criar_roteiro_btn = Button(
-                roteiro_frame, 
+        createGameBtn = Button(
+                game_frame, 
                 width=15, 
                 text='Add Game', 
                 font=f, 
                 
                 cursor='hand2',
-                command=criar_roteiro
+                command=createGame
             )
-        mostrar_btn = Button(
-            roteiro_frame, 
+        showBtn = Button(
+            game_frame, 
             width=15, 
             text='Mostrar', 
             font=f, 
-            command=mostrar_roteiro,
+            command=show_game,
             cursor='hand2',
             
         )
-        apagar_btn = Button(
-            roteiro_frame, 
+        delete_btn = Button(
+            game_frame, 
             width=15, 
             text='Delete', 
             font=f, 
-            command=apagar_roteiro,
+            command=delete_game,
             cursor='hand2',
             
         )
-        atualizar_btn = Button(
-            roteiro_frame, 
+        att_btn = Button(
+            game_frame, 
             width=15, 
             text='Atualizar', 
             font=f, 
-            command=atualizar_roteiro,
+            command=att_game,
             cursor='hand2',
             
         )
-        roteiro_exit = Button(
-            roteiro_frame,
+        gameExit = Button(
+            game_frame,
             width=15, 
             text = "Back",
             font=f, 
             
             cursor='hand2',
-            command = lambda:[menu(), main_roteiro_frame.place_forget()])
+            command = lambda:[menu(), main_game_frame.place_forget()])
         
     
         titulo.grid(row=0, column=1, pady=10, padx=20)
@@ -1023,244 +1022,17 @@ def admin():
         imagem.grid(row=5, column=1, pady=10, padx=20)
         imagem_btn.grid(row=5, column=2, columnspan = 2, rowspan = 1, padx = 5, pady = 5)
         """ question_menu.grid(row=6, column=1, pady=10, padx=20) """
-        criar_roteiro_btn.grid(row=7, column=1, pady=10, padx=20)   
-        mostrar_btn.grid(row=7, column=0, pady=10, padx=20)
-        apagar_btn.grid(row=8, column=0, pady=10, padx=20)
-        atualizar_btn.grid(row=8, column=1, pady=10, padx=20)
-        roteiro_exit.grid(row = 9, column = 0,
+        createGameBtn.grid(row=7, column=1, pady=10, padx=20)   
+        showBtn.grid(row=7, column=0, pady=10, padx=20)
+        delete_btn.grid(row=8, column=0, pady=10, padx=20)
+        att_btn.grid(row=8, column=1, pady=10, padx=20)
+        gameExit.grid(row = 9, column = 0,
         columnspan = 2, rowspan = 2, padx = 5, pady = 5)
         
-        roteiro_frame.place(relx=0.03, rely=0.1)
-        main_roteiro_frame.place(relx=0, rely=0)
+        game_frame.place(relx=0.03, rely=0.1)
+        main_game_frame.place(relx=0, rely=0)
 
-    def locais():
-
-        def browseFiles():
-            filename = filedialog.askopenfilename(  initialdir = "./imagens",
-                                                title = "Select a File",
-                                                filetypes=[
-                                                        ("JPEG", "*.jpg"),
-                                                        ("PNG", "*.png"),
-                                                        ("All files","*.*"), 
-                                                        ])
-            imagem_local.insert(0,filename)
-
-        def criar_local():
-            
-            check_counter=0
-            warn = ""
-            if imagem_local.get() == "":
-                    warn = "Image cannot be empty!"
-            else:
-                check_counter += 1
-
-            if descricao.get() == "":
-                warn = "Description cannot be empty!"
-            else:
-                check_counter += 1
-            if local_name.get() == "":
-                warn = "Local não pode estar vazio!"
-            else:
-                check_counter += 1
-            data = []
-            erro = False
-            with open('locais.txt',mode='r+', encoding="utf-8")as file:
-                for line in file:
-                    data = line.strip().split(';')
-                    print(data)
-                    if  len(data) > 0 and local_name.get() == data[0]:
-                        erro = True
-            if erro == True:
-                warn = "Local já existe!"
-            else:
-                check_counter += 1
-
-            if check_counter == 4:        
-                try:
-                    local = [local_name.get()+';', descricao.get()+';',  imagem_local.get()]
-                    file = open('locais.txt', "a", encoding="utf-8")
-                    file.writelines(local)
-                    file.write("\n")
-                    file.close()
-                    messagebox.showinfo('confirmation', 'Local criado com sucesso!')
-                    
-                    
-                except Exception as ep:
-                    messagebox.showerror('', ep) 
-            else:
-                messagebox.showerror('Erro', warn)
-
-        def mostrar_local():
-            try:  
-                tree.delete(*tree.get_children())
-                erro = False
-                with  open('locais.txt',mode='r+' ,  encoding="utf-8") as file:
-                        for line in file:
-                            data = line.strip().split(';')
-                            tree.insert("", "end", values = (data[0], data[1], data[2]))
-            except Exception as ep:
-                messagebox.showwarning('Admin', ep)
-
-
-        def apagar_local():
-            curItem = tree.focus()
-            tree_data =  tree.item(curItem)["values"]
-            loc_line = []
-            try:
-                loc_line = tree_data[0]+ ";"+ tree_data[1]+ ";"+ tree_data[2]
-            except Exception as ep:
-                messagebox.showerror('Erro', "Precisa de selecionar um local")  
-            check_counter=0
-            warn = ""
-            data = []
-            erro = False
-            with open('locais.txt',mode='r+' ,  encoding="utf-8") as file:
-                chk_file =  []
-                for line in file:
-                    data = line.strip().split(';')
-                    chk_file.append(data[0])
-                if tree_data[0] not in chk_file:
-                        erro = True    
-            if erro == True:
-                warn = "Local não existe!"
-            else:
-                check_counter += 1
-            
-            if check_counter == 1:   
-                # open file in read mode
-                with  open('locais.txt',mode='r+' ,  encoding="utf-8") as f:
-                    data = f.readlines()
-                with  open('locais.txt',mode='w' ,  encoding="utf-8") as f:
-                    for line in data :
-                        if line.strip("\n") != loc_line: 
-                            f.write(line)
-                        
-                    messagebox.showinfo('confirmation', 'Local apagado com sucesso!')
-
-            else:
-                messagebox.showerror('Erro', warn)
-
-        main_local_frame = Frame (
-            ws, 
-            bg='#fff',
-            relief=SOLID, 
-            width=app_width, 
-            height=app_height
-        )
-
-        local_frame = Frame(
-            main_local_frame, 
-            bd=2, 
-            bg='#CCCCCC',
-            relief=SOLID, 
-            padx=10, 
-            pady=10
-            )
-
-
-        tree = ttk.Treeview(
-        main_local_frame, 
-        columns = ("Local", "Descricao", "Imagem"), 
-        show = "headings", 
-        height=9
-        )
-        
-        tree.column("Local", width = 140,   anchor="c")
-        tree.column("Descricao", width = 140,   anchor="c")
-        tree.column("Imagem", width = 150,   anchor="c")
-        tree.heading("Local", text = "Local")
-        tree.heading("Descricao", text = "Descrição")
-        tree.heading("Imagem", text = "Imagem")
-        tree.place(relx= 0.55, rely=0.2)
-
-
-        Label(
-            local_frame, 
-            text="Local", 
-            bg='#CCCCCC',
-            font=f
-            ).grid(row=0, column=0, pady=10)
-
-        Label(
-            local_frame, 
-            text="Descrição", 
-            bg='#CCCCCC',
-            font=f
-            ).grid(row=1, column=0, pady=10)
-
-        Label(
-            local_frame, 
-            text="Imagem", 
-            bg='#CCCCCC',
-            font=f
-            ).grid(row=5, column=0, pady=10)
-
-        local_name = Entry(
-            local_frame, 
-            font=f
-            )
-        descricao = Entry(
-            local_frame, 
-            font=f,
-        ) 
-        imagem_local = Entry(
-            local_frame,
-            font=f,  
-        ) 
-        imagem_local_btn = Button(
-            local_frame,
-            text = "Imagem",
-            command = browseFiles) 
-        
-
-        criar_local_btn = Button(
-            local_frame, 
-            width=15, 
-            text='Criar', 
-            font=f,
-            cursor='hand2',
-            command=criar_local
-        )
-
-        apagar_btn = Button(
-            local_frame, 
-            width=15, 
-            text='Apagar', 
-            font=f, 
-            cursor='hand2',
-            command=apagar_local
-        )
-        mostrar_btn = Button(
-            local_frame, 
-            width=15, 
-            text='Mostrar', 
-            font=f, 
-            cursor='hand2',
-            command=mostrar_local
-        )
-        button_exit = Button(
-            local_frame,
-            width=15, 
-            text = "Voltar atrás",
-            font=f, 
-            
-            cursor='hand2',
-            command = lambda:[menu(), main_local_frame.place_forget()])
-
-        local_name.grid(row=0, column=1, pady=10, padx=20)
-        descricao.grid(row=1, column=1, pady=10, padx=20)
-        imagem_local.grid(row=5, column=1, pady=10, padx=20)
-        imagem_local_btn.grid(row=5, column=2, columnspan = 2, rowspan = 1, padx = 5, pady = 5) 
-        mostrar_btn.grid(row=7, column=0, pady=10, padx=20)
-        criar_local_btn.grid(row=7, column=1, pady=10, padx=20)
-        button_exit.grid(row=8, column=0, pady=10, padx=20)
-        apagar_btn.grid(row=8, column=1, pady=10, padx=20)
-        
-
-        local_frame.place(relx=0.02, rely=0.2)
-        main_local_frame.place(relx=0, rely=0)
     
-
     # infinite loop
     #admin()
     menu()
@@ -1274,7 +1046,7 @@ def home():
     top.resizable(0,0)
     top.iconbitmap("./assets/design.png") #Não dá,não sei porquê
     top.configure(bg = "NavajoWhite2") 
-    top.title("fds")
+    top.title("GamePick")
     barraNav = Menu(top)
     barraNav.add_command(label = "Home", command = "")
     barraNav.add_command(label = "Games", command = userProfile)
@@ -1311,22 +1083,51 @@ def home():
     panelJogoDestaque2.place(x = 50, y = 140)
 
 
-    """ img = Image(file="assets\SickBoy - AVENTURA.jpg") #Não dá
-    image_types.create_image(253, 375, image=img) """
 
     #Lista de Jogos
     panelGamesList = PanedWindow(top,width=250,height=350)
     panelGamesList.place(x = 700, y = 140)
-    gamesList = Listbox(panelGamesList, width=350)
+    gameslbl = Label(top,text="Games Available" , bg="NavajoWhite2").place(x=700,y=110)
+    gamesList = Listbox(panelGamesList, width=350, height = 350)
     with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
                 for line in file:
                     data1 = line.strip().split(';')
                     print (data1)
                     gamesList.insert(END, data1[0])                          
-    gamesList.place(x=100,y=100)
-            
-    
+    gamesList.place(x=0,y=0)
+    selection = gamesList.curselection()
+    global gameName
+    global gameCat
+    global gameDesc
+    def viewGame():
+        
+        with open('./data/games.txt',mode='r+')as file:
+            for line in file:
+                data = line.strip().split(';')
 
+                if selection == data[0]:
+                            gameName = data[0]
+                            gameDesc = data[1]
+                            gameCat = data[3]
+                            
+            newTop = Toplevel()
+            newTop.resizable(0,0)
+            newTop.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+            newTop.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+            newTop.configure(bg = "NavajoWhite2") 
+            newTop.title("GamePick")
+            LabelGameName = Label(newTop,text=selection)
+            LabelGameName.place(x=100,y=100)
+            LabelGameCat = Label(newTop,text=gameCat)
+            LabelGameCat.place(x=100,y=200)
+            LabelGameDesc = Label(newTop,text=gameDesc)
+            LabelGameDesc.place(x=100,y=300)
+        
+        
+        top.destroy()
+
+    btnViewGame = Button(top,text="View", command=viewGame)
+    btnViewGame.place(x=800,y=500)
 
 
 def logout():
