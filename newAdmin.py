@@ -10,17 +10,17 @@ from traceback import FrameSummary
 
 
 if not os.path.isfile('./data/users.txt'):
-    file = open('users.txt', mode='w+', encoding="utf-8")
+    file = open('./data/users.txt', mode='w+', encoding="utf-8")
     file.writelines(['João',';','admin',';','admin123',';','admin'])
     file.write("\n")
     file.close()
 
 if not os.path.isfile('./data/categories.txt'):
-    file = open('categories.txt', mode='w+', encoding="utf-8")
+    file = open('./data/categories.txt', mode='w+', encoding="utf-8")
     file.close()    
 
 if not os.path.isfile('./data/games.txt'):
-    file = open('games.txt', mode='w+', encoding="utf-8")
+    file = open('./data/games.txt', mode='w+', encoding="utf-8")
     file.close()    
 
 

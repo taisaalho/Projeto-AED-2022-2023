@@ -3,3 +3,4 @@ username;usermail;userpass;user
 username2;usermail2;userpass2;user
 username3;usermail3;userpass3;user
 user4;mail4;pass4;user
+newadmin;newadminmail;newadminpass;admin
