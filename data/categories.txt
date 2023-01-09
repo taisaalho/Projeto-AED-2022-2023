@@ -1,2 +1,11 @@
-aaaa
-joao
+Corrida 
+Estratégia 
+Ação
+Moba 
+Simulação
+Desporto 
+Aventura 
+RPG 
+Fantasia 
+Casual 
+Indie

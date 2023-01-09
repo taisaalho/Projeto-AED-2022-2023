@@ -5,10 +5,12 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import filedialog
 from tkinter.ttk import Combobox
-
 from turtle import width
 from PIL import ImageTk, Image
 import os.path
+
+
+#Funções
 
 if not os.path.isfile('./data/users.txt'):
     file = open('./data/users.txt', mode='w+', encoding="utf-8")
@@ -30,6 +32,7 @@ if not os.path.isfile('./data/views.txt'):
     file.close()
 
 
+#LogIn/SignIn Page
 
 window = Tk()
 window.title("GamePick")  #Nome da Aplicação
@@ -50,11 +53,168 @@ y = int((screenHeight/2) - (windowHeight/2))
 window.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
 
 
+#Function Pages
 
 
+def notificationPage():
 
-def userProfile():
-    return
+    notificationPage = Toplevel()
+    notificationPage.resizable(0,0)
+    notificationPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+    notificationPage.configure(bg = "NavajoWhite2") 
+    notificationPage.title("Notification Page")
+   
+   #Tamanho e localização da Window
+    windowHeight = 600
+    windowWidth = 1000
+
+    screenWidth = window.winfo_screenwidth()
+    screenHeight = window.winfo_screenheight()
+
+    x = int((screenWidth/2) - (windowWidth/2))
+    y = int((screenHeight/2) - (windowHeight/2))
+
+    notificationPage.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+
+    #Barra de Navegação
+    barraNav = Menu(notificationPage)
+    barraNav.add_command(label = "Home", command = lambda:[homePage(),notificationPage.destroy()])
+    barraNav.add_command(label = "Games", command = lambda:[gamesPage(),notificationPage.destroy()])
+    barraNav.add_command(label = "User", command = lambda:[userPage(),notificationPage.destroy()])
+    barraNav.add_command(label = "Notifications", command = "")
+    barraNav.add_command(label = "Search",command = lambda:[searchPage(),notificationPage.destroy()])
+    barraNav.add_command(label = "Quit", command = notificationPage.destroy)
+
+    notificationPage.configure(menu = barraNav)
+
+
+    #Barra de Nome
+    frame1 = Frame(notificationPage,width=1000,height=50,bg="grey")
+    frame1.place(x = 0,y = 0)
+
+    #Nome
+    lblName = Label(frame1,text = "GamePick",font = ("Saab",25),bg="grey")
+    lblName.place(x = 50 , y = 5)
+
+def userPage():
+    window.withdraw()
+    userPage = Toplevel()
+    userPage.resizable(0,0)
+    userPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+    userPage.configure(bg = "NavajoWhite2") 
+    userPage.title("User Page")
+   
+   #Tamanho e localização da Window
+    windowHeight = 600
+    windowWidth = 1000
+
+    screenWidth = window.winfo_screenwidth()
+    screenHeight = window.winfo_screenheight()
+
+    x = int((screenWidth/2) - (windowWidth/2))
+    y = int((screenHeight/2) - (windowHeight/2))
+
+    userPage.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+
+    #Barra de Navegação
+    barraNav = Menu(userPage)
+    barraNav.add_command(label = "Home", command = lambda:[homePage(),userPage.destroy()])
+    barraNav.add_command(label = "Games", command = lambda:[gamesPage(),userPage.destroy()])
+    barraNav.add_command(label = "User", command = "")
+    barraNav.add_command(label = "Notifications", command = lambda:[notificationPage(),userPage.destroy()])
+    barraNav.add_command(label = "Search",command = lambda:[searchPage(),userPage.destroy()])
+    barraNav.add_command(label = "Quit", command = userPage.destroy)
+
+    userPage.configure(menu = barraNav)
+
+    #Barra de Nome
+    frame1 = Frame(userPage,width=1000,height=50,bg="grey")
+    frame1.place(x = 0,y = 0)
+
+    #Nome
+    lblName = Label(frame1,text = "GamePick",font = ("Saab",25),bg="grey")
+    lblName.place(x = 50 , y = 5)
+
+    #Page 
+    
+
+def gamesPage():
+    
+    gamesPage = Toplevel()
+    gamesPage.resizable(0,0)
+    gamesPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+    gamesPage.configure(bg = "NavajoWhite2") 
+    gamesPage.title("Games Page")
+   
+   #Tamanho e localização da Window
+    windowHeight = 600
+    windowWidth = 1000
+
+    screenWidth = window.winfo_screenwidth()
+    screenHeight = window.winfo_screenheight()
+
+    x = int((screenWidth/2) - (windowWidth/2))
+    y = int((screenHeight/2) - (windowHeight/2))
+
+    gamesPage.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+
+    #Barra de Navegação
+    barraNav = Menu(gamesPage)
+    barraNav.add_command(label = "Home", command = lambda:[homePage(),gamesPage.destroy()])
+    barraNav.add_command(label = "Games", command = "")
+    barraNav.add_command(label = "User", command = lambda:[userPage(),gamesPage.destroy()])
+    barraNav.add_command(label = "Notifications", command = lambda:[notificationPage(),gamesPage.destroy()])
+    barraNav.add_command(label = "Search",command = lambda:[searchPage(),gamesPage.destroy()])
+    barraNav.add_command(label = "Quit", command = gamesPage.destroy)
+
+    gamesPage.configure(menu = barraNav)
+
+    #Barra de Nome
+    frame1 = Frame(gamesPage,width=1000,height=50,bg="grey")
+    frame1.place(x = 0,y = 0)
+
+    #Nome
+    lblName = Label(frame1,text = "GamePick",font = ("Saab",25),bg="grey")
+    lblName.place(x = 50 , y = 5)
+
+def searchPage():
+    window.withdraw()
+    searchPage = Toplevel()
+    searchPage.resizable(0,0)
+    searchPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+    searchPage.configure(bg = "NavajoWhite2") 
+    searchPage.title("Search Page")
+   
+   #Tamanho e localização da Window
+    windowHeight = 600
+    windowWidth = 1000
+
+    screenWidth = window.winfo_screenwidth()
+    screenHeight = window.winfo_screenheight()
+
+    x = int((screenWidth/2) - (windowWidth/2))
+    y = int((screenHeight/2) - (windowHeight/2))
+
+    searchPage.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+
+    #Barra de Navegação
+    barraNav = Menu(searchPage)
+    barraNav.add_command(label = "Home", command = lambda:[homePage(),searchPage.destroy()])
+    barraNav.add_command(label = "Games", command = lambda:[gamesPage(),searchPage.destroy()])
+    barraNav.add_command(label = "User", command = lambda:[userPage(),searchPage.destroy()])
+    barraNav.add_command(label = "Notifications", command = lambda:[notificationPage(),searchPage.destroy()])
+    barraNav.add_command(label = "Search",command = "")
+    barraNav.add_command(label = "Quit", command = searchPage.destroy)
+
+    searchPage.configure(menu = barraNav)
+
+    #Barra de Nome
+    frame1 = Frame(searchPage,width=1000,height=50,bg="grey")
+    frame1.place(x = 0,y = 0)
+
+    #Nome
+    lblName = Label(frame1,text = "GamePick",font = ("Saab",25),bg="grey")
+    lblName.place(x = 50 , y = 5)
 
 
 def loginOrRegister():
@@ -172,9 +332,7 @@ def loginOrRegister():
                 if(userType =="admin"):
                     admin()
                 else:    
-                    home()
-                
-                
+                    homePage()
             else:
                 messagebox.showerror('Login Status', 'Email ou password inválido(s)!')
         else:
@@ -204,7 +362,7 @@ def admin():
     ws = Tk()
     ws.title('Admin')
 
-
+#HOME PAGE
     screen_width = ws.winfo_screenwidth()
     screen_height = ws.winfo_screenheight()
 
@@ -1039,7 +1197,7 @@ def admin():
         
 
 
-def home():
+def homePage():
     
     window.withdraw()
     top = Toplevel()
@@ -1070,13 +1228,33 @@ def home():
     txtPesquisa = Entry(top,width=40)
     txtPesquisa.place(x = 700,y= 17)
 
+    screenWidth = window.winfo_screenwidth()
+    screenHeight = window.winfo_screenheight()
 
     x = int((screenWidth/2) - (windowWidth/2))
     y = int((screenHeight/2) - (windowHeight/2))
 
     top.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
 
-  
+    #Barra de Navegação
+    barraNav = Menu(top)
+    barraNav.add_command(label = "Home", command = "")
+    barraNav.add_command(label = "Games", command = lambda:[gamesPage(),top.destroy()])
+    barraNav.add_command(label = "User", command = lambda:[userPage(),top.destroy()])
+    barraNav.add_command(label = "Notifications", command = lambda:[notificationPage(),top.destroy()])
+    barraNav.add_command(label = "Search",command = lambda:[searchPage(),top.destroy()])
+    barraNav.add_command(label = "Quit", command = top.destroy)
+
+    top.configure(menu = barraNav)
+
+    #Barra de Nome
+    frame1 = Frame(top,width=1000,height=50,bg="grey")
+    frame1.place(x = 0,y = 0)
+
+    #Nome
+    lblName = Label(frame1,text = "GamePick",font = ("Saab",25),bg="grey")
+    lblName.place(x = 50 , y = 5)
+
 
     #Jogo Destaque
     panelJogoDestaque2 = PanedWindow(top,width=600,height=350)

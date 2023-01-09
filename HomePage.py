@@ -57,26 +57,25 @@ framePesquisa.place(x = 0,y = 0)
 lblName = Label(framePesquisa,text = "GamePick",font = ("Saab",25),bg="grey")
 lblName.place(x = 440, y = 5)
 
-#Pesquisa
-lblPesquisa = Label(window,text = "Pesquisa",font = ("Arial",12))
-lblPesquisa.place(x = 160, y = 75)
-
-txtPesquisa = Entry(window,width=100)
-txtPesquisa.place(x = 260,y = 77)
 
 #Jogo Destaque
-panelJogoDestaque = PanedWindow(window,width=600,height=350)
-panelJogoDestaque.place(x = 50, y = 140)
+panelJogoDestaque2 = PanedWindow(window,width=600,height=450)
+panelJogoDestaque2.place(x = 50, y = 90)
 
-imagemDestaque = Canvas(panelJogoDestaque,width=400,height=150,relief="sunken")
-imagemDestaque.place(x = 10,y=220)
 
 """ img = Image(file="assets\SickBoy - AVENTURA.jpg") #Não dá
 image_types.create_image(253, 375, image=img) """
 
 #Lista de Jogos
-panelListaJogos = PanedWindow(window,width=250,height=350)
-panelListaJogos.place(x = 700, y = 140)
+panelGamesList = PanedWindow(window,width=250,height=450)
+panelGamesList.place(x = 700, y = 90)
+gamesList = Listbox(panelGamesList, width=20)
+with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
+            for line in file:
+                data1 = line.strip().split(';')
+                print (data1)
+                gamesList.insert(END, data1[0])                          
+gamesList.place(x=100,y=100)
 
 
 
