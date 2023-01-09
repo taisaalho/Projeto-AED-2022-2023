@@ -361,6 +361,7 @@ def admin():
     window.withdraw()
     ws = Tk()
     ws.title('Admin')
+    ws.resizable(0,0)
 
 #HOME PAGE
     screen_width = ws.winfo_screenwidth()
@@ -765,10 +766,10 @@ def admin():
         height=16
         )
         
-        tree.column("Nome", width = 130,   anchor="c")
+        tree.column("Name", width = 130,   anchor="c")
         tree.column("Email", width = 160,  anchor="c") # c- center, e -direita, w- esquerda
         tree.column("Password", width = 130,  anchor="c") 
-        tree.heading("Nome", text = "Nome")
+        tree.heading("Name", text = "Nome")
         tree.heading("Email", text = "Email")
         tree.heading("Password", text = "Password")
         tree.place(relx= 0.55, rely=0.15)
