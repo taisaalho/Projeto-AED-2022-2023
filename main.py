@@ -374,7 +374,7 @@ def admin():
 
     ws.geometry("{:.0f}x{:.0f}+{:.0f}+{:.0f}" .format(app_width, app_height, int(x), int(y)))
     #ws.config(bg='light grey')
-    ws.config(bg='#fff')
+    ws.config(bg='NavajoWhite2')
 
     f = ('Times', 14)
 
@@ -429,7 +429,7 @@ def admin():
             font=f, 
             
             cursor='hand2',
-            command = home
+            command = homePage
         )
         
         button_exit = Button(
@@ -541,7 +541,7 @@ def admin():
         # Categorias
         main_categoria_frame = Frame (
             ws, 
-            bg='#fff',
+            bg='NavajoWhite2',
             width=app_width, 
             height=app_height
         )
@@ -567,7 +567,7 @@ def admin():
 
         Label(
             category_frame, 
-            text="Nome", 
+            text="Name", 
             bg='#CCCCCC',
             font=f
             ).grid(row=0, column=0, sticky=W, pady=10)
@@ -661,10 +661,12 @@ def admin():
             with open('./data/users.txt',mode='r+')as file:
                 for line in file:
                     data = line.strip().split(';')  
-                    if  len(data) > 0 and register_email.get() == data[1]:
+                    if  len(data) > 0 and register_name.get() == data[0]:
                         erro = True
             if erro == True:
-                warn = "Email already exists!"
+                warn = "Name already exists!"
+
+                
             else:
                 check_counter += 1
 
@@ -917,9 +919,9 @@ def admin():
 
             if check_counter == 5:        
                 try:
-                    roteiro = [titulo.get()+';', descricao.get()+';',  imagem.get()+';',value_inside.get()]
+                    game = [titulo.get()+';', descricao.get()+';',  imagem.get()+';',value_inside.get()]
                     file = open('./data/games.txt', "a", encoding="utf-8")
-                    file.writelines(roteiro)
+                    file.writelines(game)
                     file.write("\n")
                     file.close()
                     messagebox.showinfo('confirmation', 'Game Added!')
@@ -1025,13 +1027,14 @@ def admin():
                     
                     
                 except Exception as ep:
-                    messagebox.showerror('Roteiro', ep) 
+                    messagebox.showerror('Game', ep) 
             else:
                 messagebox.showerror('Erro', warn)
-        # Roteiro
+
+        # Game
         main_game_frame = Frame (
             ws, 
-            bg='#fff',
+            bg='NavajoWhite2',
             width=app_width, 
             height=app_height
         )
@@ -1106,6 +1109,7 @@ def admin():
             game_frame,
             text = "Imagem",
             command = browseFiles) 
+
         # Create the list of options
         options_list = []
         
@@ -1207,7 +1211,7 @@ def homePage():
     top.title("GamePick")
     barraNav = Menu(top)
     barraNav.add_command(label = "Home", command = "")
-    barraNav.add_command(label = "Games", command = userProfile)
+    barraNav.add_command(label = "Games", command = userPage)
     barraNav.add_command(label = "User", command = "")
     barraNav.add_command(label = "Notifications", command = "")
     barraNav.add_command(label = "Quit", command = "window.quit")
