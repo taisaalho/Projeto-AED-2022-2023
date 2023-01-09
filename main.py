@@ -226,31 +226,31 @@ def loginOrRegister():
             for line in file:
                 data = line.strip().split(';')  
         if  len(data) > 0 and txtEmail.get() == data[1]:
-            warn = "Email já existe!"
+            warn = "Email already exists!"
         else:
             check_counter += 1
         if txtRepeatPassword.get() == "":
-            warn = "Confirmar password não pode estar vazia!"
+            warn = "Confirm password,cannot be empty!"
         else:
             check_counter += 1
 
         if txtPassword.get() == "":
-            warn = "Password não pode estar vazia!"
+            warn = "Password can't be empty!"
         else:
             check_counter += 1
 
         if txtEmail.get() == "":
-            warn = "Email não pode estar vazio!"
+            warn = "Email can't be empty!"
         else:
             check_counter += 1
 
         if txtUsername.get() == "":
-            warn = "Nome não pode estar vazio!"
+            warn = "Name can't be empty!"
         else:
             check_counter += 1
 
         if txtPassword.get() != txtRepeatPassword.get():
-            warn = "Passwords não coicidem!"
+            warn = "Passwords don't match!"
         else:
             check_counter += 1
 
@@ -261,19 +261,19 @@ def loginOrRegister():
                 file.writelines(user)
                 file.write("\n")
                 file.close()
-                messagebox.showinfo('confirmation', 'Registo efetuado com sucesso!')
+                messagebox.showinfo('confirmation', 'Register sucessfull!')
                 
                 
                 #What to do next?#
                     
             except Exception as ep:
                 
-                messagebox.showerror('Erro!', ep) 
+                messagebox.showerror('Error!', ep) 
                 
 
         else:
             
-            messagebox.showerror('Erro!', warn)
+            messagebox.showerror('Error!', warn)
     #Sign In
     frameSignIn = LabelFrame(window, text = "Sign In",width = 460, height = 500, font = ("Arial",10))
     frameSignIn.place(x = 20 , y = 40)
@@ -314,27 +314,27 @@ def loginOrRegister():
                         userType = data[3]
                         check_counter += 1
                     else:
-                        warn = "Username não existe!"
+                        warn = "Username doesn't exist!"
         except Exception as ep:
             messagebox.showerror('Erro!', ep)
         if upwd == "":
-            warn = "Password não pode estar vazia!"
+            warn = "Password can't be empty!"
         else:
             check_counter += 1
         if uname == "":
-            warn = "Email não pode estar vazio!"
+            warn = "Email can't be empty!"
         else:
             check_counter += 1
         if check_counter == 3:
             if (uname == username and upwd == pwd):
-                messagebox.showinfo('Login Status', 'Efetuado login com sucesso!')      
+                messagebox.showinfo('Login Status', 'Sucessfull Log In!')      
                 
                 if(userType =="admin"):
                     admin()
                 else:    
                     homePage()
             else:
-                messagebox.showerror('Login Status', 'Email ou password inválido(s)!')
+                messagebox.showerror('Login Status', 'Email or password invalid!')
         else:
             messagebox.showerror('Erro!', warn)
    
@@ -704,7 +704,7 @@ def admin():
             try:
                 user_line = tree_data[0]+ ";"+ tree_data[1]+ ";"+ tree_data[2]+ ";"+ tree_data[3]
             except Exception as ep:
-                messagebox.showerror('Erro', "Select User")  
+                messagebox.showerror('Erro', "Select User!")  
             
             check_counter=0
             warn = ""
@@ -723,7 +723,7 @@ def admin():
                 check_counter += 1
             
             if len(chk_file) <= 1:
-                warn = "You cannot delete last admin!"
+                warn = "You cannot delete the last admin!"
             else:
                 check_counter += 1
 
@@ -744,7 +744,7 @@ def admin():
 
         main_users_frame = Frame (
             ws, 
-            bg='#fff',
+            bg='NavajoWhite2',
             width=app_width, 
             height=app_height
         )
@@ -760,7 +760,7 @@ def admin():
 
         tree = ttk.Treeview(
         main_users_frame, 
-        columns = ("Nome", "Email", "Password"), 
+        columns = ("Name", "Email", "Password"), 
         show = "headings", 
         height=16
         )
@@ -775,7 +775,7 @@ def admin():
 
         Label(
             users_frame, 
-            text="Nome", 
+            text="Name", 
             bg='#CCCCCC',
             font=f
             ).grid(row=0, column=0, sticky=W, pady=10)
@@ -796,7 +796,7 @@ def admin():
 
         Label(
             users_frame, 
-            text="Confirmar password", 
+            text="Confirm password", 
             bg='#CCCCCC',
             font=f
             ).grid(row=6, column=0, sticky=W, pady=10)
@@ -825,7 +825,7 @@ def admin():
         showBtn = Button(
             users_frame, 
             width=15, 
-            text='Mostar', 
+            text='Refresh/Show', 
             font=f, 
         
             cursor='hand2',
@@ -834,7 +834,7 @@ def admin():
         delete_btn = Button(
             users_frame, 
             width=15, 
-            text='Apagar', 
+            text='Delete', 
             font=f, 
         
             cursor='hand2',
@@ -844,7 +844,7 @@ def admin():
         register_btn = Button(
             users_frame, 
             width=15, 
-            text='Registo', 
+            text='Add', 
             font=f, 
         
             cursor='hand2',
@@ -853,7 +853,7 @@ def admin():
         back_btn = Button(
             users_frame, 
             width=15, 
-            text='Voltar atrás', 
+            text='Back', 
             font=f, 
         
             cursor='hand2',
@@ -1008,7 +1008,7 @@ def admin():
             try:
                 rot_line = tree_data[0]+ ";"+ tree_data[1]+ ";"+ tree_data[2]+ ";"+ tree_data[3]
             except Exception as ep:
-                warn = "Select a Game" 
+                warn = "Select a Game!" 
             else:
                 check_counter  +=1
             if check_counter == 5:        
@@ -1023,7 +1023,7 @@ def admin():
                     with  open('./data/games.txt',mode='w' ,  encoding="utf-8") as f:
                         f.write(data)
                     
-                    messagebox.showinfo('confirmation', 'Game Changed!')
+                    messagebox.showinfo('confirmation', 'Game changed!')
                     
                     
                 except Exception as ep:
@@ -1049,45 +1049,45 @@ def admin():
 
         tree = ttk.Treeview(
             main_game_frame, 
-        columns = ("Titulo", "Descrição", "Imagem", "Categoria"), 
+        columns = ("Title", "Description", "Image", "Category"), 
         show = "headings", 
         height=18
         )
         
-        tree.column("Titulo", width = 100,   anchor="c")
-        tree.column("Descrição", width = 100,  anchor="c") # c- center, e -direita, w- esquerda
-        tree.column("Imagem", width = 120,  anchor="c") 
-        tree.column("Categoria", width = 100,  anchor="c") 
-        tree.heading("Titulo", text = "Título")
-        tree.heading("Descrição", text = "Descrição")
-        tree.heading("Imagem", text = "Imagem")
-        tree.heading("Categoria", text = "Categoria")
+        tree.column("Title", width = 100,   anchor="c")
+        tree.column("Description", width = 100,  anchor="c") # c- center, e -direita, w- esquerda
+        tree.column("Image", width = 120,  anchor="c") 
+        tree.column("Category", width = 100,  anchor="c") 
+        tree.heading("Title", text = "Title")
+        tree.heading("Description", text = "Description")
+        tree.heading("Image", text = "Image")
+        tree.heading("Category", text = "Category")
         tree.place(relx= 0.55, rely=0.1)
 
         Label(
             game_frame, 
-            text="Título", 
+            text="Name", 
             bg='#CCCCCC',
             font=f
             ).grid(row=0, column=0, pady=10)
 
         Label(
             game_frame, 
-            text="Descrição", 
+            text="Description", 
             bg='#CCCCCC',
             font=f
             ).grid(row=1, column=0, pady=10)
 
         Label(
             game_frame, 
-            text="Imagem", 
+            text="Image", 
             bg='#CCCCCC',
             font=f
             ).grid(row=5, column=0, pady=10)
 
         Label(
             game_frame, 
-            text="Categoria", 
+            text="Category", 
             bg='#CCCCCC',
             font=f
             ).grid(row=6, column=0, pady=10)
@@ -1107,7 +1107,7 @@ def admin():
         ) 
         imagem_btn = Button(
             game_frame,
-            text = "Imagem",
+            text = "Image",
             command = browseFiles) 
 
         # Create the list of options
@@ -1122,7 +1122,7 @@ def admin():
         value_inside = StringVar(game_frame)
         
         # Set the default value of the variable
-        value_inside.set("Select category")
+        value_inside.set("Select category!")
         
         # Create the optionmenu widget and passing 
         # the options_list and value_inside to it.
@@ -1145,7 +1145,7 @@ def admin():
         showBtn = Button(
             game_frame, 
             width=15, 
-            text='Mostrar', 
+            text='Refresh', 
             font=f, 
             command=show_game,
             cursor='hand2',
@@ -1163,7 +1163,7 @@ def admin():
         att_btn = Button(
             game_frame, 
             width=15, 
-            text='Atualizar', 
+            text='Alter', 
             font=f, 
             command=att_game,
             cursor='hand2',
@@ -1226,7 +1226,7 @@ def homePage():
     lblName.place(x = 50 , y = 5)
 
     #Pesquisa
-    lblPesquisa = Label(framePesquisa,text = "Pesquisa",font = ("Arial",12))
+    lblPesquisa = Label(framePesquisa,text = "Search",font = ("Arial",12))
     lblPesquisa.place(x = 600, y = 15)
 
     txtPesquisa = Entry(top,width=40)
