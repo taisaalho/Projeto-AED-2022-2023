@@ -8,7 +8,7 @@ from tkinter.ttk import Combobox
 from turtle import width
 from PIL import ImageTk, Image
 import os.path
-
+from bokeh.palettes import RdYlGn
 
 #Funções
 
@@ -1205,11 +1205,21 @@ def admin():
 def homePage():
     
     window.withdraw()
+    
     top = Toplevel()
     top.resizable(0,0)
-    top.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+    top.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico") #Não dá,não sei porquê
     top.configure(bg = "NavajoWhite2") 
-    top.title("GamePick")
+    top.title("Home Page")
+
+    screenWidth = window.winfo_screenwidth()
+    screenHeight = window.winfo_screenheight()
+    x = int((screenWidth/2) - (windowWidth/2))
+    y = int((screenHeight/2) - (windowHeight/2))
+
+    top.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+
+    #Menu
     barraNav = Menu(top)
     barraNav.add_command(label = "Home", command = "")
     barraNav.add_command(label = "Games", command = userPage)
@@ -1217,29 +1227,6 @@ def homePage():
     barraNav.add_command(label = "Notifications", command = "")
     barraNav.add_command(label = "Quit", command = "window.quit")
     top.configure(menu = barraNav)
-
-    #Barra de Nome
-    framePesquisa = Frame(top,width=1000,height=50,bg="grey")
-    framePesquisa.place(x = 0,y = 0)
-
-    #Nome
-    lblName = Label(framePesquisa,text = "GamePick",font = ("Saab",25),bg="grey")
-    lblName.place(x = 50 , y = 5)
-
-    #Pesquisa
-    lblPesquisa = Label(framePesquisa,text = "Search",font = ("Arial",12))
-    lblPesquisa.place(x = 600, y = 15)
-
-    txtPesquisa = Entry(top,width=40)
-    txtPesquisa.place(x = 700,y= 17)
-
-    screenWidth = window.winfo_screenwidth()
-    screenHeight = window.winfo_screenheight()
-
-    x = int((screenWidth/2) - (windowWidth/2))
-    y = int((screenHeight/2) - (windowHeight/2))
-
-    top.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
 
     #Barra de Navegação
     barraNav = Menu(top)
@@ -1258,13 +1245,13 @@ def homePage():
 
     #Nome
     lblName = Label(frame1,text = "GamePick",font = ("Saab",25),bg="grey")
-    lblName.place(x = 50 , y = 5)
-
+    lblName.place(x = 420 , y = 5)
 
     #Jogo Destaque
     panelJogoDestaque2 = PanedWindow(top,width=600,height=350)
     panelJogoDestaque2.place(x = 50, y = 140)
 
+    #Imagem no Jogo Destaque
 
 
     #Lista de Jogos
@@ -1279,11 +1266,13 @@ def homePage():
                     gamesList.insert(END, data1[0])                          
     gamesList.place(x=0,y=0)
     selection = gamesList.curselection()
+
     global gameName
     global gameCat
     global gameDesc
+
+    #Ver página do jogo ao clicar da Listbox do Home Page
     def viewGame():
-        
         with open('./data/games.txt',mode='r+')as file:
             for line in file:
                 data = line.strip().split(';')
@@ -1296,16 +1285,17 @@ def homePage():
             newTop = Toplevel()
             newTop.resizable(0,0)
             newTop.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
-            newTop.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+            icon = Image.open("assets\\transferir.png")
+            newTop.iconbitmap(icon) #Não dá,não sei porquê
             newTop.configure(bg = "NavajoWhite2") 
             newTop.title("GamePick")
+
             LabelGameName = Label(newTop,text=selection)
             LabelGameName.place(x=100,y=100)
             LabelGameCat = Label(newTop,text=gameCat)
             LabelGameCat.place(x=100,y=200)
             LabelGameDesc = Label(newTop,text=gameDesc)
             LabelGameDesc.place(x=100,y=300)
-        
         
         top.destroy()
 
@@ -1320,6 +1310,7 @@ def logout():
         user_name.config(text="") """
     else:
         messagebox.showinfo('Return','Vai retornar ao ecrã da aplicação!')    
-            
+
+
 loginOrRegister()  
 window.mainloop()
