@@ -8,7 +8,7 @@ from tkinter.ttk import Combobox
 from turtle import width
 from PIL import ImageTk, Image
 import os.path
-from bokeh.palettes import RdYlGn
+# from bokeh.palettes import RdYlGn
 
 #Funções
 
@@ -1265,38 +1265,49 @@ def homePage():
                     print (data1)
                     gamesList.insert(END, data1[0])                          
     gamesList.place(x=0,y=0)
-    selection = gamesList.curselection()
 
-    global gameName
-    global gameCat
-    global gameDesc
 
     #Ver página do jogo ao clicar da Listbox do Home Page
     def viewGame():
+        selection = gamesList.curselection()
+        global gameName
+        global gameCat
+        global gameDesc
         with open('./data/games.txt',mode='r+')as file:
+            gamesNames = []
+            gamesCats = []
+            gamesDescs = []
+            gamesImages = []
             for line in file:
-                data = line.strip().split(';')
+                data= line.strip().split(";")
+                gamesNames.append(data[0])
+                if (data[3] not in gamesCats):
+                    gamesCats.append(data[3])
+                gamesImages.append(data[2])
+        gameName = gamesNames[selection[0]]
+        with open('./data/games.txt', mode='r+') as file:
+            for line in file:
+                data = line.strip().split(";")
+                if gameName == data[0]:
+                    gameDesc = data[1]
+                    gameImage = data[2]
+                    gameCat = data[3]
+            # nome, desc,image genre                            
+        newTop = Toplevel()
+        newTop.resizable(0,0)
+        newTop.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+        icon = Image.open("assets\\transferir.png")
+        # newTop.iconbitmap(icon) Não dá,não sei porquê
+        newTop.configure(bg = "NavajoWhite2") 
+        newTop.title("GamePick")
 
-                if selection == data[0]:
-                            gameName = data[0]
-                            gameDesc = data[1]
-                            gameCat = data[3]
-                            
-            newTop = Toplevel()
-            newTop.resizable(0,0)
-            newTop.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
-            icon = Image.open("assets\\transferir.png")
-            newTop.iconbitmap(icon) #Não dá,não sei porquê
-            newTop.configure(bg = "NavajoWhite2") 
-            newTop.title("GamePick")
-
-            LabelGameName = Label(newTop,text=selection)
-            LabelGameName.place(x=100,y=100)
-            LabelGameCat = Label(newTop,text=gameCat)
-            LabelGameCat.place(x=100,y=200)
-            LabelGameDesc = Label(newTop,text=gameDesc)
-            LabelGameDesc.place(x=100,y=300)
-        
+        LabelGameName = Label(newTop,text=selection)
+        LabelGameName.place(x=100,y=100)
+        LabelGameCat = Label(newTop,text=gameCat)
+        LabelGameCat.place(x=100,y=200)
+        LabelGameDesc = Label(newTop,text=gameDesc)
+        LabelGameDesc.place(x=100,y=300)
+    
         top.destroy()
 
     btnViewGame = Button(top,text="View", command=viewGame)
