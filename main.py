@@ -1,4 +1,5 @@
 from calendar import c
+import datetime as dt
 from tkinter import ttk 
 from ipaddress import collapse_addresses
 from tkinter import *
@@ -9,6 +10,9 @@ from turtle import width
 from PIL import ImageTk, Image
 import os.path
 # from bokeh.palettes import RdYlGn
+
+ratings = [1,2,3,4,4,5,6,7,8,9,10]
+
 
 #Funções
 
@@ -35,11 +39,6 @@ if not os.path.isfile('./data/views.txt'):
 #LogIn/SignIn Page
 
 window = Tk()
-window.title("GamePick")  #Nome da Aplicação
-window.resizable(0,0)
-window.iconbitmap("./assets/design.png") #Não dá,não sei porquê
-window.configure(bg = "NavajoWhite2") 
-
 #Tamanho e localização da Window
 windowHeight = 600
 windowWidth = 1000
@@ -51,6 +50,17 @@ x = int((screenWidth/2) - (windowWidth/2))
 y = int((screenHeight/2) - (windowHeight/2))
 
 window.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+window.title("GamePick")  #Nome da Aplicação
+window.resizable(0,0)
+window.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+window.configure(bg = "NavajoWhite2") 
+
+
+
+
+
+gameImgRES = []
+
 
 
 #Function Pages
@@ -59,11 +69,6 @@ window.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
 def notificationPage():
 
     notificationPage = Toplevel()
-    notificationPage.resizable(0,0)
-    notificationPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
-    notificationPage.configure(bg = "NavajoWhite2") 
-    notificationPage.title("Notification Page")
-   
    #Tamanho e localização da Window
     windowHeight = 600
     windowWidth = 1000
@@ -75,6 +80,11 @@ def notificationPage():
     y = int((screenHeight/2) - (windowHeight/2))
 
     notificationPage.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+    notificationPage.resizable(0,0)
+    notificationPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+    notificationPage.configure(bg = "NavajoWhite2") 
+    notificationPage.title("Notification Page")
+   
 
     #Barra de Navegação
     barraNav = Menu(notificationPage)
@@ -99,11 +109,6 @@ def notificationPage():
 def userPage():
     window.withdraw()
     userPage = Toplevel()
-    userPage.resizable(0,0)
-    userPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
-    userPage.configure(bg = "NavajoWhite2") 
-    userPage.title("User Page")
-   
    #Tamanho e localização da Window
     windowHeight = 600
     windowWidth = 1000
@@ -115,6 +120,11 @@ def userPage():
     y = int((screenHeight/2) - (windowHeight/2))
 
     userPage.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+    userPage.resizable(0,0)
+    userPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+    userPage.configure(bg = "NavajoWhite2") 
+    userPage.title("User Page")
+   
 
     #Barra de Navegação
     barraNav = Menu(userPage)
@@ -141,11 +151,6 @@ def userPage():
 def gamesPage():
     
     gamesPage = Toplevel()
-    gamesPage.resizable(0,0)
-    gamesPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
-    gamesPage.configure(bg = "NavajoWhite2") 
-    gamesPage.title("Games Page")
-   
    #Tamanho e localização da Window
     windowHeight = 600
     windowWidth = 1000
@@ -157,6 +162,11 @@ def gamesPage():
     y = int((screenHeight/2) - (windowHeight/2))
 
     gamesPage.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+    gamesPage.resizable(0,0)
+    gamesPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+    gamesPage.configure(bg = "NavajoWhite2") 
+    gamesPage.title("Games Page")
+   
 
     #Barra de Navegação
     barraNav = Menu(gamesPage)
@@ -180,11 +190,6 @@ def gamesPage():
 def searchPage():
     window.withdraw()
     searchPage = Toplevel()
-    searchPage.resizable(0,0)
-    searchPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
-    searchPage.configure(bg = "NavajoWhite2") 
-    searchPage.title("Search Page")
-   
    #Tamanho e localização da Window
     windowHeight = 600
     windowWidth = 1000
@@ -196,6 +201,11 @@ def searchPage():
     y = int((screenHeight/2) - (windowHeight/2))
 
     searchPage.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+    searchPage.resizable(0,0)
+    searchPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+    searchPage.configure(bg = "NavajoWhite2") 
+    searchPage.title("Search Page")
+   
 
     #Barra de Navegação
     barraNav = Menu(searchPage)
@@ -301,6 +311,7 @@ def loginOrRegister():
 
 
     def login():
+        global uname
         uname = txtUsernameLogin.get()
         upwd = txtPasswordLogin.get()
         check_counter=0
@@ -360,9 +371,6 @@ def loginOrRegister():
 def admin():
     window.withdraw()
     ws = Tk()
-    ws.title('Admin')
-    ws.resizable(0,0)
-
 #HOME PAGE
     screen_width = ws.winfo_screenwidth()
     screen_height = ws.winfo_screenheight()
@@ -374,6 +382,9 @@ def admin():
     y = (screen_height/2) - (app_height/2)
 
     ws.geometry("{:.0f}x{:.0f}+{:.0f}+{:.0f}" .format(app_width, app_height, int(x), int(y)))
+    ws.title('Admin')
+    ws.resizable(0,0)
+
     #ws.config(bg='light grey')
     ws.config(bg='NavajoWhite2')
 
@@ -463,7 +474,7 @@ def admin():
             
             data = []
             erro = False
-            with open('./data/categories.txt',mode='r+')as file:
+            with open('./data/categories.txt',mode='r+', encoding="utf-8")as file:
                 for line in file:
                     data = line.strip().split(';')
                     if  len(data) > 0 and category_name.get() == data[0]:
@@ -659,7 +670,7 @@ def admin():
             
             data = []
             erro = False
-            with open('./data/users.txt',mode='r+')as file:
+            with open('./data/users.txt',mode='r+', encoding="utf-8")as file:
                 for line in file:
                     data = line.strip().split(';')  
                     if  len(data) > 0 and register_name.get() == data[0]:
@@ -883,7 +894,7 @@ def admin():
             imagem.insert(0,filename)
 
         def createGame():
-            print(value_inside)
+            
             check_counter=0
             warn = ""
             if value_inside.get() == "":
@@ -908,7 +919,7 @@ def admin():
             
             data = []
             erro = False
-            with open('./data/games.txt',mode='r+')as file:
+            with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
                 for line in file:
                     data = line.strip().split(';')
                     if  len(data) > 0 and titulo.get() == data[0]:
@@ -1200,17 +1211,13 @@ def admin():
     #admin()
     menu()
         
-
+    
 
 def homePage():
     
     window.withdraw()
     
     top = Toplevel()
-    top.resizable(0,0)
-    top.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico") #Não dá,não sei porquê
-    top.configure(bg = "NavajoWhite2") 
-    top.title("Home Page")
 
     screenWidth = window.winfo_screenwidth()
     screenHeight = window.winfo_screenheight()
@@ -1218,15 +1225,12 @@ def homePage():
     y = int((screenHeight/2) - (windowHeight/2))
 
     top.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+    top.resizable(0,0)
+    top.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico") #Não dá,não sei porquê
+    top.configure(bg = "NavajoWhite2") 
+    top.title("Home Page")
 
-    #Menu
-    barraNav = Menu(top)
-    barraNav.add_command(label = "Home", command = "")
-    barraNav.add_command(label = "Games", command = userPage)
-    barraNav.add_command(label = "User", command = "")
-    barraNav.add_command(label = "Notifications", command = "")
-    barraNav.add_command(label = "Quit", command = "window.quit")
-    top.configure(menu = barraNav)
+  
 
     #Barra de Navegação
     barraNav = Menu(top)
@@ -1262,7 +1266,6 @@ def homePage():
     with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
                 for line in file:
                     data1 = line.strip().split(';')
-                    print (data1)
                     gamesList.insert(END, data1[0])                          
     gamesList.place(x=0,y=0)
 
@@ -1273,7 +1276,7 @@ def homePage():
         global gameName
         global gameCat
         global gameDesc
-        with open('./data/games.txt',mode='r+')as file:
+        with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
             gamesNames = []
             gamesCats = []
             gamesDescs = []
@@ -1285,7 +1288,7 @@ def homePage():
                     gamesCats.append(data[3])
                 gamesImages.append(data[2])
         gameName = gamesNames[selection[0]]
-        with open('./data/games.txt', mode='r+') as file:
+        with open('./data/games.txt', mode='r+', encoding="utf-8") as file:
             for line in file:
                 data = line.strip().split(";")
                 if gameName == data[0]:
@@ -1293,6 +1296,7 @@ def homePage():
                     gameImage = data[2]
                     gameCat = data[3]
             # nome, desc,image genre                            
+        top.destroy()
         newTop = Toplevel()
         newTop.resizable(0,0)
         newTop.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
@@ -1301,17 +1305,100 @@ def homePage():
         newTop.configure(bg = "NavajoWhite2") 
         newTop.title("GamePick")
 
-        LabelGameName = Label(newTop,text=selection)
-        LabelGameName.place(x=100,y=100)
+
+
+
+        #Barra de Navegação
+        barraNavGame = Menu(newTop)
+        barraNavGame.add_command(label = "Home", command = lambda:[newTop.destroy(),homePage()])
+        barraNavGame.add_command(label = "Games", command = lambda:[gamesPage(),newTop.destroy()])
+        barraNavGame.add_command(label = "User", command = lambda:[userPage(),newTop.destroy()])
+        barraNavGame.add_command(label = "Notifications", command = lambda:[notificationPage(),newTop.destroy()])
+        barraNavGame.add_command(label = "Search",command = lambda:[searchPage(),newTop.destroy()])
+        barraNavGame.add_command(label = "Quit", command = newTop.destroy)
+        newTop.configure(menu = barraNavGame)
+        
+        LabelGameName = Label(newTop,text=gameName)
+        LabelGameName.place(x=55,y=50)
+        
+        personalRating = 0
+        # def saveRating(personalRating):
+            # with open('./data/rating.txt',mode='w', encoding="utf-8")as file:
+            # return
+
+        lblGamPersonalRate = Label(newTop,text="Rate").place(x=50,y=540)
+        lblCombobox = Combobox(newTop,width=3,values=ratings,textvariable=personalRating)
+        lblCombobox.place(x=80,y=540)
+
+        btnSaveRate = Button(newTop,text="Save",command=lambda:saveRating(personalRating))
+        btnSaveRate.place(x=140, y=537)
+
+        txtComment = Text(newTop,width=50,height=3)
+        txtComment.place(x=450,y=300)
+        
+        def postComment():
+            newcontent=txtComment.get(1.0,END)
+            content = newcontent[0:-1]
+            dateA =str(dt.date.today())
+            comment = uname + "\t" + dateA + "\n" + str(content) + "\n\n"
+            with open('./data/comments.txt',mode='a', encoding="utf-8")as file:
+                
+                txtSeeComments.insert(END,comment)
+                file.writelines([gameName +';' + uname +';' + content+';' +dateA + "\n"])
+                
+
+        btnSubmit = Button(newTop,text="Post",command=postComment)
+        btnSubmit.place(x=870,y=320)
+        lblGameCat = Label(newTop,text="Genre:")
+        lblGameCat.place(x=255,y=540)
         LabelGameCat = Label(newTop,text=gameCat)
-        LabelGameCat.place(x=100,y=200)
-        LabelGameDesc = Label(newTop,text=gameDesc)
-        LabelGameDesc.place(x=100,y=300)
-    
+        LabelGameCat.place(x=300,y=540)
+        LabelGameDesc = Label(newTop,text=gameDesc,wraplength=500, justify="left")
+        LabelGameDesc.place(x=450,y=100)
+
+        txtSeeComments = Text(newTop,width=65,height=10,wrap=WORD)
+        txtSeeComments.place(x=450,y=400)
+        with open('./data/comments.txt', mode='r+', encoding="utf-8") as file:
+            comments = []
+            # jogo user comment data2
+            for line in file:
+                data=line.strip().split(";")
+                
+                if gameName== data[0]: 
+                    userComment = data[1]
+                    commentComment = data[2]
+                    dateComment = data[3]
+                    comment = userComment + "\t" + dateComment + "\n" + commentComment + "\n\n"
+                    txtSeeComments.insert(END,comment)
+                    comments.append(comment)  
+                
+                   
+        global img
+        
+        # canvasGameImage = Canvas(window,width=200, height= 300)
+        # canvasGameImage.place(x=100,y=100)
+        # img = ImageTk.PhotoImage(Image.open(gameImage))
+        # img = img.resize((200,300), Image.ANTIALIAS)
+        # img2 = ImageTk.PhotoImage(image=img2)
+        # finalImage = ImageTk.PhotoImage(img2)
+        # imgResized = img.resize((200,300),Image.ANTIALIAS)
+        # imgResized2 = ImageTk.PhotoImage(imgResized)
+        # canvasGameImage.create_image(0,0,image=gamesImages[0])
+        
+        canvasGameImage = Canvas(newTop,width=350, height= 420, bg="NavajoWhite2",bd=0, relief="ridge",highlightthickness=0)
+        canvasGameImage.place(x=50,y=100)
+        img = ImageTk.PhotoImage(file=gameImage)
+        # imgResized = img.resize((200,300),Image.ANTIALIAS)
+        canvasGameImage.create_image(180,200,image=img)
+        
+        
         top.destroy()
 
-    btnViewGame = Button(top,text="View", command=viewGame)
+    btnViewGame = Button(top,text="View", command= viewGame)
     btnViewGame.place(x=800,y=500)
+
+
+
 
 
 def logout():
