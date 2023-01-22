@@ -39,6 +39,11 @@ if not os.path.isfile('./data/views.txt'):
 #LogIn/SignIn Page
 
 window = Tk()
+window.title("GamePick")  #Nome da Aplicação
+window.resizable(0,0)
+window.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico")
+window.configure(bg = "NavajoWhite2") 
+
 #Tamanho e localização da Window
 windowHeight = 600
 windowWidth = 1000
@@ -69,6 +74,11 @@ gameImgRES = []
 def notificationPage():
 
     notificationPage = Toplevel()
+    notificationPage.resizable(0,0)
+    notificationPage.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico")
+    notificationPage.configure(bg = "NavajoWhite2") 
+    notificationPage.title("Notification Page")
+   
    #Tamanho e localização da Window
     windowHeight = 600
     windowWidth = 1000
@@ -109,6 +119,11 @@ def notificationPage():
 def userPage():
     window.withdraw()
     userPage = Toplevel()
+    userPage.resizable(0,0)
+    userPage.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico")
+    userPage.configure(bg = "NavajoWhite2") 
+    userPage.title("User Page")
+   
    #Tamanho e localização da Window
     windowHeight = 600
     windowWidth = 1000
@@ -151,6 +166,11 @@ def userPage():
 def gamesPage():
     
     gamesPage = Toplevel()
+    gamesPage.resizable(0,0)
+    gamesPage.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico")
+    gamesPage.configure(bg = "NavajoWhite2") 
+    gamesPage.title("Games Page")
+   
    #Tamanho e localização da Window
     windowHeight = 600
     windowWidth = 1000
@@ -188,8 +208,14 @@ def gamesPage():
     lblName.place(x = 50 , y = 5)
 
 def searchPage():
+
     window.withdraw()
     searchPage = Toplevel()
+    searchPage.resizable(0,0)
+    searchPage.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico")
+    searchPage.configure(bg = "NavajoWhite2") 
+    searchPage.title("Search Page")
+   
    #Tamanho e localização da Window
     windowHeight = 600
     windowWidth = 1000
@@ -219,12 +245,171 @@ def searchPage():
     searchPage.configure(menu = barraNav)
 
     #Barra de Nome
-    frame1 = Frame(searchPage,width=1000,height=50,bg="grey")
-    frame1.place(x = 0,y = 0)
+    frame12 = Frame(searchPage,width=1000,height=50,bg="grey")
+    frame12.place(x = 0,y = 0)
 
     #Nome
-    lblName = Label(frame1,text = "GamePick",font = ("Saab",25),bg="grey")
+    lblName = Label(frame12,text = "GamePick",font = ("Saab",25),bg="grey")
     lblName.place(x = 50 , y = 5)
+
+
+    #---------------------------------------------------------------------------------
+    def getName():
+        if searchName.get():
+            data = []
+            error = ""
+            with open('./data/games.txt',mode='r', encoding="utf-8")as file:
+                for line in file:
+                    data = line.strip().split(';')
+                    print(data[0])  
+                    if searchName.get() == data[0]:
+                        error = False
+                        searchListBox.delete(0,END) #apagar
+                        searchListBox.insert(END,searchName.get()) #deixar só nome do entry na listbox
+                        break
+                    else:
+                        error = True
+                if error:
+                        messagebox.showerror('Error!', 'Game name invalid!')
+        else:
+            return
+
+    def getCategory(dropdownSearch):
+        if dropdownSearch.get():
+            cat = []
+            filterCat = []
+            with open('./data/games.txt',mode='r', encoding="utf-8")as file:
+                for line in file:
+                    cat = line.strip().split(';')
+                    if dropdownSearch.get() == cat[3]:
+                        filterCat.append(cat[0])
+                if filterCat:
+                    cat2 = ""
+                    searchListBox.delete(0,END) #apagar
+                    for filter in filterCat:
+                        """ cat2 += filter+" "+"\n" 
+                        print(cat2) """
+                        searchListBox.insert(END,filter) #deixar só nome do entry na listbox
+                else:
+                    messagebox.showerror('Error!', 'Theres no game with this category!')
+        else:
+            return 
+            
+    def getViews(selected,searchListBox):
+        if selected.get():
+            max = float("-infinity")
+            data = []
+            views = []
+            viewMaster = []
+            v = ""
+            with open('./data/views.txt',mode='r', encoding="utf-8")as file:
+                for line in file:
+                    data = line.strip().split(';')
+                    views.extend([data[0],data[1]])
+                    viewMaster.append(views)
+                    views = []
+                for view in viewMaster:
+                    print(view[1])
+                    if float(view[1]) > float(max):
+                        v = view
+                        max = view[1]
+                        print(v)       
+                if v:
+                    searchListBox.delete(0,END) #apagar
+                    searchListBox.insert(END,v[0]) #deixar só nome do entry na listbox 
+        
+    
+    
+    searchPanedWindow = PanedWindow(searchPage,width=300,height=402)
+    searchPanedWindow.place(x = 30,y = 110)
+
+    lblSearch = Label(searchPanedWindow,text = "Search by:",font = ("Arial",15))
+    lblSearch.place(x = 10,y = 5)
+
+    lblSearchName = Label(searchPanedWindow,text = "Name:",font = ("Arial",11))
+    lblSearchName.place(x = 10,y = 60)
+
+    searchName = Entry(searchPanedWindow,width=30)
+    searchName.place(x = 60,y = 62)
+
+    listCategory = []
+    with open('./data/games.txt',mode='r', encoding="utf-8")as file:
+            for line in file:
+                cat = line.strip().split(';')
+                listCategory.append(cat[3])
+
+
+    lblSearchDropdown = Label(searchPanedWindow,text = "Category:",font = ("Arial",11))
+    lblSearchDropdown.place(x = 10,y = 95)
+
+    dropdownSearch = Combobox(searchPanedWindow,values = listCategory)
+    dropdownSearch.place(x=80,y=97)
+
+    lblSearchRadio = Label(searchPanedWindow,text = "Views:",font = ("Arial",11))
+    lblSearchRadio.place(x = 10, y = 130)
+
+    def deselect():
+        searchCheck.deselect()
+
+    selected = StringVar()
+    searchCheck = Checkbutton(searchPanedWindow,text= "Yes",variable=selected,font = ("Arial",11))
+    deselect()
+    searchCheck.place(x = 60, y = 128)
+
+    """ searchTreeView = ttk.TreeView(searchPage,selectmode = "browse",columns = ("Game","Category","Views"),show = "headings")
+
+    searchTreeView.collumn("Game", width = 100,anchora = "c")
+    searchTreeView.collumn("Category", width = 100,anchora = "c")
+    searchTreeView.collumn("Views", width = 100,anchora = "c")
+    with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
+                for line in file:
+                    data1 = line.strip().split(';')
+                    print (data1)
+                    searchTreeView.insert("","end", values = (data1[0],data1[3]))
+    with open('./data/rating.txt',mode='r+', encoding="utf-8") as file:
+        for line in file:
+            data2 = line.strip().split(';')
+            searchTreeView.insert("","end", values = (data2[1]))
+    with open('./data/views.txt',mode='r+', encoding="utf-8") as file:
+        for line in file:
+            data3 = line.strip().split(';')
+            searchTreeView.insert("","end", values = (data3[1]))
+    searchTreeView.place( x = 395,y = 110) """
+
+    searchListBox = Listbox(searchPage,width=95,height=25)
+    with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
+                for line in file:
+                    data1 = line.strip().split(';')
+                    print (data1)
+                    searchListBox.insert(END, data1[0])
+    """ with open('./data/rating.txt',mode='r+', encoding="utf-8") as file:
+        for line in file:
+            data2 = line.strip().split(';')
+            searchListBox.insert(END, data2[1])
+    with open('./data/views.txt',mode='r+', encoding="utf-8") as file:
+        for line in file:
+            data3 = line.strip().split(';')
+            searchListBox.insert(END, data3[1]) """
+
+    def refreshSearch():
+        searchListBox.delete(0,END)
+        with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
+                    for line in file:
+                        data1 = line.strip().split(';')
+                        print (data1)
+                        searchListBox.insert(END, data1[0])
+
+
+    searchListBox.place( x = 395,y = 110)
+    
+    btnSearch = Button(searchPanedWindow,text = "Confirm", font = ("Arial Bold",12), width = 8 ,height = 2,command= lambda:[getName(),getCategory(dropdownSearch),getViews(selected,searchListBox)])
+    btnSearch.place(x = 25,y = 325)
+
+    btnRefreshSearch = Button(searchPanedWindow,text = "Refresh", font = ("Arial Bold",12), width = 8 ,height = 2,command = refreshSearch)
+    btnRefreshSearch.place(x = 175 ,y = 325)
+
+    
+
 
 
 def loginOrRegister():
@@ -371,6 +556,10 @@ def loginOrRegister():
 def admin():
     window.withdraw()
     ws = Tk()
+    ws.title('Admin')
+    ws.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico")
+    ws.resizable(0,0)
+
 #HOME PAGE
     screen_width = ws.winfo_screenwidth()
     screen_height = ws.winfo_screenheight()
@@ -1230,7 +1419,6 @@ def homePage():
     top.configure(bg = "NavajoWhite2") 
     top.title("Home Page")
 
-  
 
     #Barra de Navegação
     barraNav = Menu(top)
@@ -1296,12 +1484,10 @@ def homePage():
                     gameImage = data[2]
                     gameCat = data[3]
             # nome, desc,image genre                            
-        top.destroy()
         newTop = Toplevel()
         newTop.resizable(0,0)
         newTop.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
-        icon = Image.open("assets\\transferir.png")
-        # newTop.iconbitmap(icon) Não dá,não sei porquê
+        newTop.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico")
         newTop.configure(bg = "NavajoWhite2") 
         newTop.title("GamePick")
 
