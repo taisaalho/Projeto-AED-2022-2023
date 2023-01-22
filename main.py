@@ -1516,12 +1516,12 @@ def homePage():
         lblCombobox = Combobox(newTop,width=3,values=ratings,textvariable=personalRating)
         lblCombobox.place(x=80,y=540)
 
-        btnSaveRate = Button(newTop,text="Save",command=lambda:saveRating(personalRating))
+        btnSaveRate = Button(newTop,text="Save",command=lambda:[saveRating(personalRating)])
         btnSaveRate.place(x=140, y=537)
 
         txtComment = Text(newTop,width=50,height=3)
         txtComment.place(x=450,y=300)
-        
+
         def postComment():
             newcontent=txtComment.get(1.0,END)
             content = newcontent[0:-1]
