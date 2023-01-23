@@ -9,3 +9,4 @@ Adventure
 Casual
 Indie
 Fantasy 
+FPS

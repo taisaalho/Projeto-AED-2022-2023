@@ -936,7 +936,7 @@ def admin():
             except Exception as ep:
                 messagebox.showwarning('Admin', ep)
 
-        def deleteAdmin():
+        """ def deleteAdmin():
             curItem = tree.focus()
             tree_data =  tree.item(curItem)["values"]
             user_line = []
@@ -979,7 +979,7 @@ def admin():
                     messagebox.showinfo('confirmation', 'User deleted!')
 
             else:
-                messagebox.showerror('Erro', warn)
+                messagebox.showerror('Erro', warn) """
 
         main_users_frame = Frame (
             ws, 
@@ -1070,7 +1070,7 @@ def admin():
             cursor='hand2',
             command=showAdmin
         )
-        delete_btn = Button(
+        """ delete_btn = Button(
             users_frame, 
             width=15, 
             text='Delete', 
@@ -1078,7 +1078,7 @@ def admin():
         
             cursor='hand2',
             command=deleteAdmin
-        )
+        ) """
     
         register_btn = Button(
             users_frame, 
@@ -1104,14 +1104,14 @@ def admin():
         pwd_again.grid(row=6, column=1, pady=10, padx=20)
         register_btn.grid(row=7, column=1, pady=10, padx=20)
         showBtn.grid(row=7, column=0, pady=10, padx=20)
-        delete_btn.grid(row=8, column=1, pady=10, padx=20)
+        """ delete_btn.grid(row=8, column=1, pady=10, padx=20) """
         back_btn.grid(row=8, column=0, pady=10, padx=20)
         users_frame.place(relx=0.03, rely=0.15)
         main_users_frame.place(relx=0, rely=0)
 
     def games():
         def browseFiles():
-            filename = filedialog.askopenfilename(  initialdir = "/assets",
+            filename = filedialog.askopenfilename(  initialdir = "./assets",
                                                 title = "Select a File",
                                                 filetypes=[
                                                         ("JPEG", "*.jpg"),
@@ -1514,6 +1514,23 @@ def homePage():
     catsTree.heading("Games",text="Games")
     catsTree.place(x=250,y=50)
 
+    catsForTree=[]
+    catsForCount=[]
+    with  open('./data/categories.txt',mode='r+',encoding="utf-8") as file:
+        for line in file:
+            data = line.strip().split(';')
+            catsForTree.append(data[0])
+    with  open('./data/games.txt',mode='r+',encoding="utf-8") as file:
+            for line in file:
+                data = line.strip().split(";")
+                catsForCount.append(data[3])
+            
+    new=[]
+    for i in range(len(catsForTree)):        
+        new.append(catsForCount.count(catsForTree[i]))
+        catsTree.insert("", "end", values = (catsForTree[i],new[i]))
+            
+
     lblGenre = Label(panelJogoDestaque2,text="Favorite Category:")
     lblGenre.place(x=50,y=300)
 
@@ -1593,7 +1610,7 @@ def homePage():
                     gameCat = data[3]
             # nome, desc,image genre
 
-        
+
 
         top.destroy()
         newTop = Toplevel()
@@ -1603,9 +1620,7 @@ def homePage():
         newTop.configure(bg = "NavajoWhite2") 
         newTop.title("GamePick")
 
-
-
-
+        
         #Barra de Navegação
         barraNavGame = Menu(newTop)
         barraNavGame.add_command(label = "Home", command = lambda:[newTop.destroy(),homePage()])
