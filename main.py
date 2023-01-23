@@ -688,7 +688,7 @@ def admin():
             text = "Games",
             font=f, 
             cursor='hand2',
-            command = lambda:[games(), menu_frame.place_forget(),show_game()])
+            command = lambda:[games(), menu_frame.place_forget()])
         places_btn = Button(
             menu_frame,
             width=12,
