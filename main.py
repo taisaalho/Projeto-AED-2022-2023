@@ -9,17 +9,12 @@ from tkinter.ttk import Combobox
 from turtle import width
 from PIL import ImageTk, Image
 import os.path
-# from bokeh.palettes import RdYlGn
 
 ratings = [1,2,3,4,5,6,7,8,9,10]
-
-
 #Funções
 
 if not os.path.isfile('./data/users.txt'):
     file = open('./data/users.txt', mode='w+', encoding="utf-8")
-    file.writelines(['João',';','admin',';','admin123',';','admin'])
-    file.write("\n")
     file.close()
 
 
@@ -34,10 +29,14 @@ if not os.path.isfile('./data/games.txt'):
 if not os.path.isfile('./data/views.txt'):
     file = open('./data/views.txt', mode='w+', encoding="utf-8")
     file.close()
-
+if not os.path.isfile('./data/rating.txt'):
+    file = open('./data/views.txt', mode='w+', encoding="utf-8")
+    file.close()
+if not os.path.isfile('./data/comments.txt'):
+    file = open('./data/views.txt', mode='w+', encoding="utf-8")
+    file.close()
 
 #LogIn/SignIn Page
-
 window = Tk()
 window.title("GamePick")  #Nome da Aplicação
 window.resizable(0,0)
@@ -57,34 +56,10 @@ y = int((screenHeight/2) - (windowHeight/2))
 window.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
 window.title("GamePick")  #Nome da Aplicação
 window.resizable(0,0)
-window.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+window.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico") #Não dá,não sei porquê
 window.configure(bg = "NavajoWhite2") 
 
-
-
-
-
 gameImgRES = []
-""" def addRemoveFavorite(gameName,user):
-    if gameName in favs and u:
-        favs.remove(gameName)
-        with open('./data/users.txt',mode='r+', encoding="utf-8")as file:
-            for line in file:
-                data = line.strip().split(";")
-
-    return
-def checkFavorite(gameName,user):
-    global favs
-    with open('./data/users.txt',mode='r+', encoding="utf-8")as file:
-        for line in file:
-            data = line.strip().split(";")
-            favs = data[4].strip().split(".")
-            if uname==user:
-                for game in favs:
-                    if game == gameName:
-                        return True"""
-
-
 
 def checkList(gameName,uname,array,newPersonalRating):
     for i in range(len(array)):
@@ -99,149 +74,6 @@ def checkCat(uname,array,selection):
             array[i][1] = selection
             
             return True
-#Function Pages
-
-
-def notificationPage():
-
-    notificationPage = Toplevel()
-    notificationPage.resizable(0,0)
-    notificationPage.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico")
-    notificationPage.configure(bg = "NavajoWhite2") 
-    notificationPage.title("Notification Page")
-   
-   #Tamanho e localização da Window
-    windowHeight = 600
-    windowWidth = 1000
-
-    screenWidth = window.winfo_screenwidth()
-    screenHeight = window.winfo_screenheight()
-
-    x = int((screenWidth/2) - (windowWidth/2))
-    y = int((screenHeight/2) - (windowHeight/2))
-
-    notificationPage.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
-    notificationPage.resizable(0,0)
-    notificationPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
-    notificationPage.configure(bg = "NavajoWhite2") 
-    notificationPage.title("Notification Page")
-   
-
-    #Barra de Navegação
-    barraNav = Menu(notificationPage)
-    barraNav.add_command(label = "Home", command = lambda:[homePage(),notificationPage.destroy()])
-    barraNav.add_command(label = "Games", command = lambda:[gamesPage(),notificationPage.destroy()])
-    barraNav.add_command(label = "User", command = lambda:[userPage(),notificationPage.destroy()])
-    barraNav.add_command(label = "Notifications", command = "")
-    barraNav.add_command(label = "Search",command = lambda:[searchPage(),notificationPage.destroy()])
-    barraNav.add_command(label = "Quit", command = notificationPage.destroy)
-
-    notificationPage.configure(menu = barraNav)
-
-
-    #Barra de Nome
-    frame1 = Frame(notificationPage,width=1000,height=50,bg="grey")
-    frame1.place(x = 0,y = 0)
-
-    #Nome
-    lblName = Label(frame1,text = "GamePick",font = ("Saab",25),bg="grey")
-    lblName.place(x = 50 , y = 5)
-
-    txtNot = Text(notificationPage,width=100,height=20,wrap=WORD)
-    txtNot.place(x=100,y=100)
-
-    
-
-def userPage():
-    window.withdraw()
-    userPage = Toplevel()
-    userPage.resizable(0,0)
-    userPage.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico")
-    userPage.configure(bg = "NavajoWhite2") 
-    userPage.title("User Page")
-   
-   #Tamanho e localização da Window
-    windowHeight = 600
-    windowWidth = 1000
-
-    screenWidth = window.winfo_screenwidth()
-    screenHeight = window.winfo_screenheight()
-
-    x = int((screenWidth/2) - (windowWidth/2))
-    y = int((screenHeight/2) - (windowHeight/2))
-
-    userPage.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
-    userPage.resizable(0,0)
-    userPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
-    userPage.configure(bg = "NavajoWhite2") 
-    userPage.title("User Page")
-   
-
-    #Barra de Navegação
-    barraNav = Menu(userPage)
-    barraNav.add_command(label = "Home", command = lambda:[homePage(),userPage.destroy()])
-    barraNav.add_command(label = "Games", command = lambda:[gamesPage(),userPage.destroy()])
-    barraNav.add_command(label = "User", command = "")
-    barraNav.add_command(label = "Notifications", command = lambda:[notificationPage(),userPage.destroy()])
-    barraNav.add_command(label = "Search",command = lambda:[searchPage(),userPage.destroy()])
-    barraNav.add_command(label = "Quit", command = userPage.destroy)
-
-    userPage.configure(menu = barraNav)
-
-    #Barra de Nome
-    frame1 = Frame(userPage,width=1000,height=50,bg="grey")
-    frame1.place(x = 0,y = 0)
-
-    #Nome
-    lblName = Label(frame1,text = "GamePick",font = ("Saab",25),bg="grey")
-    lblName.place(x = 50 , y = 5)
-
-    #Page 
-    
-
-def gamesPage():
-    
-    gamesPage = Toplevel()
-    gamesPage.resizable(0,0)
-    gamesPage.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico")
-    gamesPage.configure(bg = "NavajoWhite2") 
-    gamesPage.title("Games Page")
-   
-   #Tamanho e localização da Window
-    windowHeight = 600
-    windowWidth = 1000
-
-    screenWidth = window.winfo_screenwidth()
-    screenHeight = window.winfo_screenheight()
-
-    x = int((screenWidth/2) - (windowWidth/2))
-    y = int((screenHeight/2) - (windowHeight/2))
-
-    gamesPage.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
-    gamesPage.resizable(0,0)
-    gamesPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
-    gamesPage.configure(bg = "NavajoWhite2") 
-    gamesPage.title("Games Page")
-   
-
-    #Barra de Navegação
-    barraNav = Menu(gamesPage)
-    barraNav.add_command(label = "Home", command = lambda:[homePage(),gamesPage.destroy()])
-    barraNav.add_command(label = "Games", command = "")
-    barraNav.add_command(label = "User", command = lambda:[userPage(),gamesPage.destroy()])
-    barraNav.add_command(label = "Notifications", command = lambda:[notificationPage(),gamesPage.destroy()])
-    barraNav.add_command(label = "Search",command = lambda:[searchPage(),gamesPage.destroy()])
-    barraNav.add_command(label = "Quit", command = gamesPage.destroy)
-
-    gamesPage.configure(menu = barraNav)
-
-    #Barra de Nome
-    frame1 = Frame(gamesPage,width=1000,height=50,bg="grey")
-    frame1.place(x = 0,y = 0)
-
-    #Nome
-    lblName = Label(frame1,text = "GamePick",font = ("Saab",25),bg="grey")
-    lblName.place(x = 50 , y = 5)
 
 def searchPage():
 
@@ -264,7 +96,7 @@ def searchPage():
 
     searchPage.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
     searchPage.resizable(0,0)
-    searchPage.iconbitmap("./assets/design.png") #Não dá,não sei porquê
+    searchPage.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico") 
     searchPage.configure(bg = "NavajoWhite2") 
     searchPage.title("Search Page")
    
@@ -272,21 +104,11 @@ def searchPage():
     #Barra de Navegação
     barraNav = Menu(searchPage)
     barraNav.add_command(label = "Home", command = lambda:[homePage(),searchPage.destroy()])
-    barraNav.add_command(label = "Games", command = lambda:[gamesPage(),searchPage.destroy()])
-    barraNav.add_command(label = "User", command = lambda:[userPage(),searchPage.destroy()])
-    barraNav.add_command(label = "Notifications", command = lambda:[notificationPage(),searchPage.destroy()])
+    
     barraNav.add_command(label = "Search",command = "")
     barraNav.add_command(label = "Quit", command = searchPage.destroy)
 
     searchPage.configure(menu = barraNav)
-
-    #Barra de Nome
-    frame12 = Frame(searchPage,width=1000,height=50,bg="grey")
-    frame12.place(x = 0,y = 0)
-
-    #Nome
-    lblName = Label(frame12,text = "GamePick",font = ("Saab",25),bg="grey")
-    lblName.place(x = 50 , y = 5)
 
 
     #---------------------------------------------------------------------------------
@@ -323,8 +145,7 @@ def searchPage():
                     cat2 = ""
                     searchListBox.delete(0,END) #apagar
                     for filter in filterCat:
-                        """ cat2 += filter+" "+"\n" 
-                        print(cat2) """
+                        
                         searchListBox.insert(END,filter) #deixar só nome do entry na listbox
                 else:
                     messagebox.showerror('Error!', 'Theres no game with this category!')
@@ -383,51 +204,17 @@ def searchPage():
 
 
     btnViews = Button(searchPanedWindow,text="Views",command=lambda:getViews(selected,searchListBox))
-    # lblSearchRadio = Label(searchPanedWindow,text = "Views:",font = ("Arial",11))
     btnViews.place(x = 10, y = 130)
 
-    def deselect():
-        searchCheck.deselect()
-
     selected = StringVar()
-    searchCheck = Checkbutton(searchPanedWindow,text= "Yes",variable=selected,font = ("Arial",11))
-    deselect()
-    searchCheck.place(x = 60, y = 128)
-
-    """ searchTreeView = ttk.TreeView(searchPage,selectmode = "browse",columns = ("Game","Category","Views"),show = "headings")
-
-    searchTreeView.collumn("Game", width = 100,anchora = "c")
-    searchTreeView.collumn("Category", width = 100,anchora = "c")
-    searchTreeView.collumn("Views", width = 100,anchora = "c")
-    with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
-                for line in file:
-                    data1 = line.strip().split(';')
-                    print (data1)
-                    searchTreeView.insert("","end", values = (data1[0],data1[3]))
-    with open('./data/rating.txt',mode='r+', encoding="utf-8") as file:
-        for line in file:
-            data2 = line.strip().split(';')
-            searchTreeView.insert("","end", values = (data2[1]))
-    with open('./data/views.txt',mode='r+', encoding="utf-8") as file:
-        for line in file:
-            data3 = line.strip().split(';')
-            searchTreeView.insert("","end", values = (data3[1]))
-    searchTreeView.place( x = 395,y = 110) """
-
+    
     searchListBox = Listbox(searchPage,width=95,height=25)
     with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
                 for line in file:
                     data1 = line.strip().split(';')
                     print (data1)
                     searchListBox.insert(END, data1[0])
-    """ with open('./data/rating.txt',mode='r+', encoding="utf-8") as file:
-        for line in file:
-            data2 = line.strip().split(';')
-            searchListBox.insert(END, data2[1])
-    with open('./data/views.txt',mode='r+', encoding="utf-8") as file:
-        for line in file:
-            data3 = line.strip().split(';')
-            searchListBox.insert(END, data3[1]) """
+
 
     def refreshSearch():
         searchListBox.delete(0,END)
@@ -497,7 +284,7 @@ def loginOrRegister():
                 messagebox.showinfo('confirmation', 'Register sucessfull!')
                 
                 
-                #What to do next?#
+                
                     
             except Exception as ep:
                 
@@ -620,9 +407,6 @@ def admin():
 
 
     def menu():
-        def voltar_atras():
-            ws.destroy()
-            import HomePage
         # widgets
         menu_frame = Frame(
             ws, 
@@ -861,7 +645,7 @@ def admin():
         create_category.grid(row=1, column=1, pady=10, padx=20)
         showBtn.grid(row=1, column=0, pady=10, padx=20)
         delete_btn.grid(row=2, column=1, pady=10, padx=20)
-        
+
         back_btn.grid(row = 2, column = 0, padx = 10, pady = 20)
         category_frame.place(relx=0.3, rely=0.5, anchor= CENTER)
         main_categoria_frame.place(relx=0, rely=0)
@@ -935,51 +719,6 @@ def admin():
                                 tree.insert("", "end", values = (data[0], data[1], data[2]))
             except Exception as ep:
                 messagebox.showwarning('Admin', ep)
-
-        """ def deleteAdmin():
-            curItem = tree.focus()
-            tree_data =  tree.item(curItem)["values"]
-            user_line = []
-            try:
-                user_line = tree_data[0]+ ";"+ tree_data[1]+ ";"+ tree_data[2]+ ";"+ tree_data[3] +";none"
-            except Exception as ep:
-                messagebox.showerror('Erro', "Select User!")  
-            
-            check_counter=0
-            warn = ""
-            data = []
-            chk_file =  []
-            erro = False
-            with open('./data/users.txt',mode='r+' ,  encoding="utf-8") as file:
-                for line in file:
-                    data = line.strip().split(';')
-                    chk_file.append(data[1])
-                if tree_data[1] not in chk_file:
-                        erro = True    
-            if erro == True:
-                warn = "User doesn't exist!"
-            else:
-                check_counter += 1
-            
-            if len(chk_file) <= 1:
-                warn = "You cannot delete the last admin!"
-            else:
-                check_counter += 1
-
-
-            if check_counter == 2:   
-                # open file in read mode
-                with  open('./data/users.txt',mode='r+' ,  encoding="utf-8") as f:
-                    data = f.readlines()
-                with  open('./data/users.txt',mode='w' ,  encoding="utf-8") as f:
-                    for line in data :
-                        if line.strip("\n") != user_line: 
-                            f.write(line)
-                        
-                    messagebox.showinfo('confirmation', 'User deleted!')
-
-            else:
-                messagebox.showerror('Erro', warn) """
 
         main_users_frame = Frame (
             ws, 
@@ -1070,15 +809,7 @@ def admin():
             cursor='hand2',
             command=showAdmin
         )
-        """ delete_btn = Button(
-            users_frame, 
-            width=15, 
-            text='Delete', 
-            font=f, 
-        
-            cursor='hand2',
-            command=deleteAdmin
-        ) """
+
     
         register_btn = Button(
             users_frame, 
@@ -1104,7 +835,6 @@ def admin():
         pwd_again.grid(row=6, column=1, pady=10, padx=20)
         register_btn.grid(row=7, column=1, pady=10, padx=20)
         showBtn.grid(row=7, column=0, pady=10, padx=20)
-        """ delete_btn.grid(row=8, column=1, pady=10, padx=20) """
         back_btn.grid(row=8, column=0, pady=10, padx=20)
         users_frame.place(relx=0.03, rely=0.15)
         main_users_frame.place(relx=0, rely=0)
@@ -1353,25 +1083,19 @@ def admin():
             text = "Image",
             command = browseFiles) 
 
-        # Create the list of options
+        
         options_list = []
         
         with  open('./data/categories.txt',mode='r+' ,  encoding="utf-8") as file:
                         for line in file:
                             data = line.strip().split(';')
                             options_list.append(data[0])
-        # Variable to keep track of the option
-        # selected in OptionMenu
+ 
         value_inside = StringVar(game_frame)
         
-        # Set the default value of the variable
         value_inside.set("Select category!")
         
-        # Create the optionmenu widget and passing 
-        # the options_list and value_inside to it.
         cbCategories = Combobox(game_frame, values = options_list,textvariable=value_inside).grid(row=6, column=1, pady=10)
-        
-
         categoria = Entry(
             game_frame, 
             font=f,
@@ -1421,12 +1145,10 @@ def admin():
             cursor='hand2',
             command = lambda:[menu(), main_game_frame.place_forget()])
         
-    
         titulo.grid(row=0, column=1, pady=10, padx=20)
         descricao.grid(row=1, column=1, pady=10, padx=20) 
         imagem.grid(row=5, column=1, pady=10, padx=20)
         imagem_btn.grid(row=5, column=2, columnspan = 2, rowspan = 1, padx = 5, pady = 5)
-        """ question_menu.grid(row=6, column=1, pady=10, padx=20) """
         createGameBtn.grid(row=7, column=1, pady=10, padx=20)   
         showBtn.grid(row=7, column=0, pady=10, padx=20)
         delete_btn.grid(row=8, column=0, pady=10, padx=20)
@@ -1437,13 +1159,9 @@ def admin():
         game_frame.place(relx=0.03, rely=0.1)
         main_game_frame.place(relx=0, rely=0)
 
-    
-    # infinite loop
-    #admin()
     menu()
         
     
-
 def homePage():
     
     with open('./data/users.txt',mode='r+', encoding="utf-8")as file:
@@ -1455,7 +1173,6 @@ def homePage():
                         favs = data[4].strip().split(".")
                         
                     else:favs=[]
-
 
     window.withdraw()
     
@@ -1472,27 +1189,13 @@ def homePage():
     top.configure(bg = "NavajoWhite2") 
     top.title("Home Page")
 
-
-
     #Barra de Navegação
     barraNav = Menu(top)
     barraNav.add_command(label = "Home", command = "")
-    barraNav.add_command(label = "Games", command = lambda:[gamesPage(),top.destroy()])
-    barraNav.add_command(label = "User", command = lambda:[userPage(),top.destroy()])
-    barraNav.add_command(label = "Notifications", command = lambda:[notificationPage(),top.destroy()])
     barraNav.add_command(label = "Search",command = lambda:[searchPage(),top.destroy()])
     barraNav.add_command(label = "Quit", command = top.destroy)
 
     top.configure(menu = barraNav)
-
-    #Barra de Nome
-    frame1 = Frame(top,width=1000,height=50,bg="grey")
-    frame1.place(x = 0,y = 0)
-
-    #Nome
-    lblName = Label(frame1,text = "GamePick",font = ("Saab",25),bg="grey")
-    lblName.place(x = 420 , y = 5)
-
     #Jogo Destaque
     panelJogoDestaque2 = PanedWindow(top,width=600,height=350)
     panelJogoDestaque2.place(x = 50, y = 140)
@@ -1577,12 +1280,8 @@ def homePage():
                     gamesList.insert(END, data1[0])                          
     gamesList.place(x=0,y=0)
 
-
     #Ver página do jogo ao clicar da Listbox do Home Page
     def viewGame():
-
-
-
         selection = gamesList.curselection()
         global gameName
         global gameCat
@@ -1608,10 +1307,7 @@ def homePage():
                     gameDesc = data[1]
                     gameImage = data[2]
                     gameCat = data[3]
-            # nome, desc,image genre
-
-
-
+            
         top.destroy()
         newTop = Toplevel()
         newTop.resizable(0,0)
@@ -1624,9 +1320,6 @@ def homePage():
         #Barra de Navegação
         barraNavGame = Menu(newTop)
         barraNavGame.add_command(label = "Home", command = lambda:[newTop.destroy(),homePage()])
-        barraNavGame.add_command(label = "Games", command = lambda:[gamesPage(),newTop.destroy()])
-        barraNavGame.add_command(label = "User", command = lambda:[userPage(),newTop.destroy()])
-        barraNavGame.add_command(label = "Notifications", command = lambda:[notificationPage(),newTop.destroy()])
         barraNavGame.add_command(label = "Search",command = lambda:[searchPage(),newTop.destroy()])
         barraNavGame.add_command(label = "Quit", command = newTop.destroy)
         newTop.configure(menu = barraNavGame)
@@ -1634,13 +1327,6 @@ def homePage():
         LabelGameName = Label(newTop,text=gameName)
         LabelGameName.place(x=55,y=50)
         
-
-        # def saveRating(personalRating):
-        # return
-
-
-
-
         def saveRating():
             
             newStuff=""
@@ -1784,44 +1470,19 @@ def homePage():
                     txtSeeComments.insert(END,comment)
                     comments.append(comment)  
                 
-                   
+
         global img
-        
-        # canvasGameImage = Canvas(window,width=200, height= 300)
-        # canvasGameImage.place(x=100,y=100)
-        # img = ImageTk.PhotoImage(Image.open(gameImage))
-        # img = img.resize((200,300), Image.ANTIALIAS)
-        # img2 = ImageTk.PhotoImage(image=img2)
-        # finalImage = ImageTk.PhotoImage(img2)
-        # imgResized = img.resize((200,300),Image.ANTIALIAS)
-        # imgResized2 = ImageTk.PhotoImage(imgResized)
-        # canvasGameImage.create_image(0,0,image=gamesImages[0])
-        
         
         canvasGameImage = Canvas(newTop,width=350, height= 420, bg="NavajoWhite2",bd=0, relief="ridge",highlightthickness=0)
         canvasGameImage.place(x=50,y=100)
         img = ImageTk.PhotoImage(file=gameImage)
-        # imgResized = img.resize((200,300),Image.ANTIALIAS)
-        canvasGameImage.create_image(180,200,image=img)
         
+        canvasGameImage.create_image(180,200,image=img)
         
         top.destroy()
 
     btnViewGame = Button(top,text="View", command= viewGame)
     btnViewGame.place(x=800,y=500)
-
-
-
-
-
-def logout():
-    MsgBox = messagebox.askquestion('Exit Application','Deseja mesmo efetuar o logout?',icon = 'warning')    
-    if MsgBox == 'yes':
-        """ user_btn.config(text="Login/Registo", command=openWindow)
-        user_name.config(text="") """
-    else:
-        messagebox.showinfo('Return','Vai retornar ao ecrã da aplicação!')    
-
 
 loginOrRegister()  
 window.mainloop()
