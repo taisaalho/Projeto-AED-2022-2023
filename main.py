@@ -11,7 +11,7 @@ from PIL import ImageTk, Image
 import os.path
 # from bokeh.palettes import RdYlGn
 
-ratings = [1,2,3,4,4,5,6,7,8,9,10]
+ratings = [1,2,3,4,5,6,7,8,9,10]
 
 
 #Funções
@@ -65,9 +65,40 @@ window.configure(bg = "NavajoWhite2")
 
 
 gameImgRES = []
+""" def addRemoveFavorite(gameName,user):
+    if gameName in favs and u:
+        favs.remove(gameName)
+        with open('./data/users.txt',mode='r+', encoding="utf-8")as file:
+            for line in file:
+                data = line.strip().split(";")
+
+    return
+def checkFavorite(gameName,user):
+    global favs
+    with open('./data/users.txt',mode='r+', encoding="utf-8")as file:
+        for line in file:
+            data = line.strip().split(";")
+            favs = data[4].strip().split(".")
+            if uname==user:
+                for game in favs:
+                    if game == gameName:
+                        return True"""
 
 
 
+def checkList(gameName,uname,array,newPersonalRating):
+    for i in range(len(array)):
+        if array[i][0] == gameName and array[i][1] == uname:
+            array[i][2] = newPersonalRating
+            return True         
+        
+
+def checkCat(uname,array,selection):
+    for i in range(len(array)):
+        if array[i][0] == uname: 
+            array[i][1] = selection
+            
+            return True
 #Function Pages
 
 
@@ -115,6 +146,11 @@ def notificationPage():
     #Nome
     lblName = Label(frame1,text = "GamePick",font = ("Saab",25),bg="grey")
     lblName.place(x = 50 , y = 5)
+
+    txtNot = Text(notificationPage,width=100,height=20,wrap=WORD)
+    txtNot.place(x=100,y=100)
+
+    
 
 def userPage():
     window.withdraw()
@@ -345,8 +381,10 @@ def searchPage():
     dropdownSearch = Combobox(searchPanedWindow,values = listCategory)
     dropdownSearch.place(x=80,y=97)
 
-    lblSearchRadio = Label(searchPanedWindow,text = "Views:",font = ("Arial",11))
-    lblSearchRadio.place(x = 10, y = 130)
+
+    btnViews = Button(searchPanedWindow,text="Views",command=lambda:getViews(selected,searchListBox))
+    # lblSearchRadio = Label(searchPanedWindow,text = "Views:",font = ("Arial",11))
+    btnViews.place(x = 10, y = 130)
 
     def deselect():
         searchCheck.deselect()
@@ -402,7 +440,7 @@ def searchPage():
 
     searchListBox.place( x = 395,y = 110)
     
-    btnSearch = Button(searchPanedWindow,text = "Confirm", font = ("Arial Bold",12), width = 8 ,height = 2,command= lambda:[getName(),getCategory(dropdownSearch),getViews(selected,searchListBox)])
+    btnSearch = Button(searchPanedWindow,text = "Confirm", font = ("Arial Bold",12), width = 8 ,height = 2,command= lambda:[getName(),getCategory(dropdownSearch)])
     btnSearch.place(x = 25,y = 325)
 
     btnRefreshSearch = Button(searchPanedWindow,text = "Refresh", font = ("Arial Bold",12), width = 8 ,height = 2,command = refreshSearch)
@@ -451,7 +489,7 @@ def loginOrRegister():
 
         if check_counter == 6:        
             try:
-                user = [txtUsername.get()+';', txtEmail.get()+';',  txtPassword.get()+';','user']
+                user = [txtUsername.get()+';', txtEmail.get()+';',  txtPassword.get()+';','user'+";"+"none"]
                 file = open('./data/users.txt', "a", encoding="utf-8")
                 file.writelines(user)
                 file.write("\n")
@@ -873,7 +911,7 @@ def admin():
 
             if check_counter == 6:        
                 try:
-                    user = [register_name.get()+';', register_email.get()+';',  register_pwd.get()+';','admin']
+                    user = [register_name.get()+';', register_email.get()+';',  register_pwd.get()+';','admin',';','none']
                     file = open('./data/users.txt', "a", encoding="utf-8")
                     file.writelines(user)
                     file.write("\n")
@@ -903,7 +941,7 @@ def admin():
             tree_data =  tree.item(curItem)["values"]
             user_line = []
             try:
-                user_line = tree_data[0]+ ";"+ tree_data[1]+ ";"+ tree_data[2]+ ";"+ tree_data[3]
+                user_line = tree_data[0]+ ";"+ tree_data[1]+ ";"+ tree_data[2]+ ";"+ tree_data[3] +";none"
             except Exception as ep:
                 messagebox.showerror('Erro', "Select User!")  
             
@@ -1073,7 +1111,7 @@ def admin():
 
     def games():
         def browseFiles():
-            filename = filedialog.askopenfilename(  initialdir = "./imagens",
+            filename = filedialog.askopenfilename(  initialdir = "/assets",
                                                 title = "Select a File",
                                                 filetypes=[
                                                         ("JPEG", "*.jpg"),
@@ -1081,6 +1119,7 @@ def admin():
                                                         ("All files","*.*"), 
                                                         ])
             imagem.insert(0,filename)
+            print(filename)
 
         def createGame():
             
@@ -1188,6 +1227,7 @@ def admin():
             rot_line = [] 
             check_counter=0
             warn = ""
+
             if value_inside.get() == "":
                 warn = "Category cannot be empty!"
             else:
@@ -1224,6 +1264,8 @@ def admin():
                     with  open('./data/games.txt',mode='w' ,  encoding="utf-8") as f:
                         f.write(data)
                     
+                    
+
                     messagebox.showinfo('confirmation', 'Game changed!')
                     
                     
@@ -1404,6 +1446,17 @@ def admin():
 
 def homePage():
     
+    with open('./data/users.txt',mode='r+', encoding="utf-8")as file:
+            global favs
+            for line in file:
+                data = line.strip().split(";")
+                if uname == data[0]: 
+                    if data[4] != "none":
+                        favs = data[4].strip().split(".")
+                        
+                    else:favs=[]
+
+
     window.withdraw()
     
     top = Toplevel()
@@ -1418,6 +1471,7 @@ def homePage():
     top.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico") #Não dá,não sei porquê
     top.configure(bg = "NavajoWhite2") 
     top.title("Home Page")
+
 
 
     #Barra de Navegação
@@ -1445,7 +1499,56 @@ def homePage():
 
     #Imagem no Jogo Destaque
 
+    lblShowFavorites = Label(panelJogoDestaque2,text="Your Favorites")
+    lblShowFavorites.place(x=50,y=50)
 
+    lboxFavorites = Listbox(panelJogoDestaque2)
+    lboxFavorites.place(x=50,y=70)
+    for fav in favs:
+        lboxFavorites.insert(END,fav)
+
+    catsTree = ttk.Treeview(panelJogoDestaque2,columns=("Category","Games"),show="headings",height=10)
+    catsTree.column("Category",width=100,anchor="c")
+    catsTree.column("Games",width=100,anchor="c")
+    catsTree.heading("Category",text="Category")
+    catsTree.heading("Games",text="Games")
+    catsTree.place(x=250,y=50)
+
+    lblGenre = Label(panelJogoDestaque2,text="Favorite Category:")
+    lblGenre.place(x=50,y=300)
+
+    def savePref():
+        array=[]
+        with open('./data/notifications.txt',mode='r+', encoding="utf-8")as f:
+            
+            for line in f:
+                dataNot=line.strip().split(";")
+                array.append(dataNot)
+                
+        selection = cboxGenre.get()
+
+
+            
+        with open('./data/notifications.txt',mode='w+', encoding="utf-8")as f2:
+            if checkCat(uname,array,selection) == True:
+                    print(array) 
+                    for i in range (len(array)):
+                        f2.writelines(array[i][0] + ";" +array[i][1] + ";"+ "none" + "\n")
+            else:
+                    array.append([uname,selection])
+                    for i in range (len(array)):
+                        f2.writelines(array[i][0] + ";" +array[i][1] + ";" + "none" + "\n")
+                        
+    
+    with open('./data/categories.txt',mode='r+', encoding="utf-8")as file:
+        cats = []
+        for line in file:
+            data = line.strip()
+            cats.append(data)
+        cboxGenre = Combobox(panelJogoDestaque2,values=cats)
+        cboxGenre.place(x=150,y=300)
+        btnSave = Button(panelJogoDestaque2,text="Save",command=savePref)
+        btnSave.place(x=300,y=300)
     #Lista de Jogos
     panelGamesList = PanedWindow(top,width=250,height=350)
     panelGamesList.place(x = 700, y = 140)
@@ -1460,10 +1563,14 @@ def homePage():
 
     #Ver página do jogo ao clicar da Listbox do Home Page
     def viewGame():
+
+
+
         selection = gamesList.curselection()
         global gameName
         global gameCat
         global gameDesc
+        
         with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
             gamesNames = []
             gamesCats = []
@@ -1476,6 +1583,7 @@ def homePage():
                     gamesCats.append(data[3])
                 gamesImages.append(data[2])
         gameName = gamesNames[selection[0]]
+        
         with open('./data/games.txt', mode='r+', encoding="utf-8") as file:
             for line in file:
                 data = line.strip().split(";")
@@ -1483,7 +1591,11 @@ def homePage():
                     gameDesc = data[1]
                     gameImage = data[2]
                     gameCat = data[3]
-            # nome, desc,image genre                            
+            # nome, desc,image genre
+
+        
+
+        top.destroy()
         newTop = Toplevel()
         newTop.resizable(0,0)
         newTop.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
@@ -1507,16 +1619,115 @@ def homePage():
         LabelGameName = Label(newTop,text=gameName)
         LabelGameName.place(x=55,y=50)
         
-        personalRating = 0
+
         # def saveRating(personalRating):
-            # with open('./data/rating.txt',mode='w', encoding="utf-8")as file:
-            # return
+        # return
 
+
+
+
+        def saveRating():
+            
+            newStuff=""
+            array = []
+            count= 0
+            newPersonalRating = str(cboxCombobox.current()+1)
+            
+
+            with open('./data/rating.txt',mode='r+', encoding="utf-8")as file:
+                replacedContent=""
+                for line in file:
+                    data=line.strip().split(";")
+                    array.append(data)
+                    
+                    
+            
+            with open('./data/rating.txt',mode='w+', encoding="utf-8")as file:
+                
+                if checkList(gameName,uname,array,newPersonalRating) == True:
+                    for i in range(len(array)):
+                        file.writelines(array[i][0] + ";" + array[i][1] + ";" + array[i][2] +"\n" )
+                else:
+                    array.append([gameName,uname,newPersonalRating])
+                    for i in range(len(array)):
+                        file.writelines(array[i][0] + ";" + array[i][1] + ";" + array[i][2] +"\n" )
+                
+            newPersonalRating = 0
+
+        personalRating = 0
         lblGamPersonalRate = Label(newTop,text="Rate").place(x=50,y=540)
-        lblCombobox = Combobox(newTop,width=3,values=ratings,textvariable=personalRating)
-        lblCombobox.place(x=80,y=540)
+    
+        cboxCombobox = Combobox(newTop,width=3,values=ratings,textvariable=personalRating,state="readonly")
 
-        btnSaveRate = Button(newTop,text="Save",command=lambda:[saveRating(personalRating)])
+
+        cboxCombobox.place(x=80,y=540)
+        with open('./data/rating.txt',mode='r+', encoding="utf-8")as file:
+            personalRating = 0
+            
+            for line in file:
+                data=line.strip().split(";")
+
+                if data[0] == gameName and uname == data[1]:
+                    print(personalRating)
+                    personalRating = data[2]
+                    cboxCombobox.current(ratings[int(personalRating)-2])
+            
+        def addFavorite():
+            check = False
+            for fav in favs:
+                if fav == gameName:
+                    check = True
+            if not check:
+
+                favs.append(gameName)
+                arrayFav = []
+                with open('./data/users.txt',mode='r', encoding="utf-8")as file:
+                    for line in file:
+                        data=line.strip().split(";")
+                        arrayFav.append(data)
+                with open('./data/users.txt',mode='w+', encoding="utf-8")as file:
+                    print(arrayFav)
+                    for i in range(len(arrayFav)):
+                        
+    
+                        if uname == arrayFav[i][0]:
+                            string=""
+                            
+                            string=".".join(favs) 
+                            arrayFav[i][4] = string
+
+                        file.writelines(str(arrayFav[i][0]) + ";" + str(arrayFav[i][1]) + ";" + str(arrayFav[i][2]) +";"+ str(arrayFav[i][3]) +";"+ str(arrayFav[i][4]) + "\n")
+                btnFavorite.configure(text="Remove from favorites")
+            else:
+                removed=[]
+                for fav in favs:
+                    if fav == gameName:
+                        pos=favs.index(gameName)
+                        favs.pop(pos)
+                        if len(favs) == 0:
+                            favs.append("none")
+                arrayFav = []
+                with open('./data/users.txt',mode='r', encoding="utf-8")as file:
+                    for line in file:
+                        data=line.strip().split(";")
+                        arrayFav.append(data)
+                with open('./data/users.txt',mode='w+', encoding="utf-8")as file:
+                    print(arrayFav)
+                    for i in range(len(arrayFav)):
+                        
+    
+                        if uname == arrayFav[i][0]:
+                            
+                            string=".".join(favs) 
+                            arrayFav[i][4] = string
+
+                        file.writelines(str(arrayFav[i][0]) + ";" + str(arrayFav[i][1]) + ";" + str(arrayFav[i][2]) +";"+ str(arrayFav[i][3]) +";"+ str(arrayFav[i][4]) + "\n")
+                btnFavorite.configure(text="Add to Favorites")          
+
+        btnFavorite = Button(newTop,text="Add to Favorites",command=addFavorite)
+        btnFavorite. place(x=850, y=50)
+
+        btnSaveRate = Button(newTop,text="Save",command=saveRating)
         btnSaveRate.place(x=140, y=537)
 
         txtComment = Text(newTop,width=50,height=3)
@@ -1570,6 +1781,7 @@ def homePage():
         # imgResized = img.resize((200,300),Image.ANTIALIAS)
         # imgResized2 = ImageTk.PhotoImage(imgResized)
         # canvasGameImage.create_image(0,0,image=gamesImages[0])
+        
         
         canvasGameImage = Canvas(newTop,width=350, height= 420, bg="NavajoWhite2",bd=0, relief="ridge",highlightthickness=0)
         canvasGameImage.place(x=50,y=100)

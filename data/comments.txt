@@ -11,3 +11,7 @@ Sims 4;user;123;2023-01-21
 Sims 4;user;123;2023-01-21
 Sims 4;user;123;2023-01-21
 Sims 4;user;123;2023-01-21
+Sims 4;user;12355;2023-01-21
+Sims 4;user;comentario;2023-01-21
+Football Manager 2023;user;asdasdasdsa;2023-01-21
+Sims 4;teste;qwe;2023-01-22

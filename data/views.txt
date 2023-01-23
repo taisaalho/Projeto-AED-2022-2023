@@ -1,10 +1,10 @@
-CarX Drift Racing Online;0
-Counter-Strike: Global Offensive;0
-Dota 2;0
-Farming Simulator 22;0
-Football Manager 2023;0
-Lost Ark;0
-Red Dead Redemption II;1
-SackBoy;0
-Sims 4;0
-FINAL FANTASY XIV Online;0
+CarX Drift Racing Online;12
+Counter-Strike: Global Offensive;15
+Dota 2;12
+Farming Simulator 22;7
+Football Manager 2023;6
+Lost Ark;5
+Red Dead Redemption II;10
+SackBoy;2
+Sims 4;4
+FINAL FANTASY XIV Online;1

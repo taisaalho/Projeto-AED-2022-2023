@@ -1,3 +1,5 @@
-admin;adminemail;123;admin
-user;useremail;123;user
-teste;teste;123;admin
+admin;adminemail;123;admin;Sims 4.VALORANT.Lost Ark
+user;useremail;123;user;Sims 4.VALORANT
+teste;teste;123;user;Sims 4
+alves;alvesmail;123;user;none
+aaa;aa;a;admin

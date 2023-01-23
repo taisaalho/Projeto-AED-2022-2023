@@ -1,1 +1,9 @@
-Sims 4;user;5
+Sims 4;user2;7
+Sims 4;user;7
+VALORANT;user;8
+Sims 4;teste;5
+Sims 4;alves;9
+Football Manager 2023;teste;8
+VALORANT;teste;5
+Lost Ark;teste;3
+CarX Drift Racing Online;teste;7
