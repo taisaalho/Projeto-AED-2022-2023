@@ -7,3 +7,4 @@ Football Manager 2023;teste;8
 VALORANT;teste;5
 Lost Ark;teste;3
 CarX Drift Racing Online;teste;7
+Red Dead Redemption II;user;8

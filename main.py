@@ -152,8 +152,8 @@ def searchPage():
         else:
             return 
             
-    def getViews(selected,searchListBox):
-        if selected.get():
+    def getViews(dropdownSearchView):
+        if dropdownSearchView.get() == "Yes":
             max = float("-infinity")
             data = []
             views = []
@@ -174,6 +174,8 @@ def searchPage():
                 if v:
                     searchListBox.delete(0,END) #apagar
                     searchListBox.insert(END,v[0]) #deixar só nome do entry na listbox 
+        else: 
+            return
         
     
     
@@ -202,12 +204,36 @@ def searchPage():
     dropdownSearch = Combobox(searchPanedWindow,values = listCategory)
     dropdownSearch.place(x=80,y=97)
 
+    lblView = Label(searchPanedWindow,text="View:",font = ("Arial",11))
+    lblView.place(x = 10,y = 126)
 
-    btnViews = Button(searchPanedWindow,text="Views",command=lambda:getViews(selected,searchListBox))
-    btnViews.place(x = 10, y = 130)
-
-    selected = StringVar()
+    listView = []
+    listView.append("Yes")
+    listView.append("No")
     
+    dropdownSearchView = Combobox(searchPanedWindow,values = listView)
+    dropdownSearchView.place(x = 60, y = 128)
+
+    """ searchTreeView = ttk.TreeView(searchPage,selectmode = "browse",columns = ("Game","Category","Views"),show = "headings")
+
+    searchTreeView.collumn("Game", width = 100,anchora = "c")
+    searchTreeView.collumn("Category", width = 100,anchora = "c")
+    searchTreeView.collumn("Views", width = 100,anchora = "c")
+    with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
+                for line in file:
+                    data1 = line.strip().split(';')
+                    print (data1)
+                    searchTreeView.insert("","end", values = (data1[0],data1[3]))
+    with open('./data/rating.txt',mode='r+', encoding="utf-8") as file:
+        for line in file:
+            data2 = line.strip().split(';')
+            searchTreeView.insert("","end", values = (data2[1]))
+    with open('./data/views.txt',mode='r+', encoding="utf-8") as file:
+        for line in file:
+            data3 = line.strip().split(';')
+            searchTreeView.insert("","end", values = (data3[1]))
+    searchTreeView.place( x = 395,y = 110) """
+
     searchListBox = Listbox(searchPage,width=95,height=25)
     with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
                 for line in file:
@@ -227,12 +253,235 @@ def searchPage():
 
     searchListBox.place( x = 395,y = 110)
     
-    btnSearch = Button(searchPanedWindow,text = "Confirm", font = ("Arial Bold",12), width = 8 ,height = 2,command= lambda:[getName(),getCategory(dropdownSearch)])
+    btnSearch = Button(searchPanedWindow,text = "Confirm", font = ("Arial Bold",12), width = 8 ,height = 2,command= lambda:[getName(),getCategory(dropdownSearch),getViews(dropdownSearchView)])
     btnSearch.place(x = 25,y = 325)
 
     btnRefreshSearch = Button(searchPanedWindow,text = "Refresh", font = ("Arial Bold",12), width = 8 ,height = 2,command = refreshSearch)
     btnRefreshSearch.place(x = 175 ,y = 325)
 
+    def viewGame():
+        selection = searchListBox.curselection()
+        global gameName
+        global gameCat
+        global gameDesc
+        
+        with open('./data/games.txt',mode='r+', encoding="utf-8")as file:
+            gamesNames = []
+            gamesCats = []
+            gamesDescs = []
+            gamesImages = []
+            for line in file:
+                data= line.strip().split(";")
+                gamesNames.append(data[0])
+                if (data[3] not in gamesCats):
+                    gamesCats.append(data[3])
+                gamesImages.append(data[2])
+        gameName = gamesNames[selection[0]]
+        
+        with open('./data/games.txt', mode='r+', encoding="utf-8") as file:
+            for line in file:
+                data = line.strip().split(";")
+                if gameName == data[0]:
+                    gameDesc = data[1]
+                    gameImage = data[2]
+                    gameCat = data[3]
+            # nome, desc,image genre
+
+
+        window.withdraw()
+        newTop = Toplevel()
+        newTop.resizable(0,0)
+        newTop.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
+        newTop.iconbitmap("./assets//video-game-play-toad-mushroom-mario_108577.ico")
+        newTop.configure(bg = "NavajoWhite2") 
+        newTop.title("GamePick")
+
+        
+        #Barra de Navegação
+        barraNavGame = Menu(newTop)
+        barraNavGame.add_command(label = "Home", command = lambda:[homePage(),newTop.destroy()])
+        barraNavGame.add_command(label = "Search",command = lambda:[searchPage(),newTop.destroy()])
+        barraNavGame.add_command(label = "Quit", command = newTop.destroy)
+        newTop.configure(menu = barraNavGame)
+        
+        LabelGameName = Label(newTop,text=gameName)
+        LabelGameName.place(x=55,y=50)
+        
+
+        # def saveRating(personalRating):
+        # return
+
+
+
+
+        def saveRating():
+            
+            newStuff=""
+            array = []
+            count= 0
+            newPersonalRating = str(cboxCombobox.current()+1)
+            
+
+            with open('./data/rating.txt',mode='r+', encoding="utf-8")as file:
+                replacedContent=""
+                for line in file:
+                    data=line.strip().split(";")
+                    array.append(data)
+                    
+                    
+            
+            with open('./data/rating.txt',mode='w+', encoding="utf-8")as file:
+                
+                if checkList(gameName,uname,array,newPersonalRating) == True:
+                    for i in range(len(array)):
+                        file.writelines(array[i][0] + ";" + array[i][1] + ";" + array[i][2] +"\n" )
+                else:
+                    array.append([gameName,uname,newPersonalRating])
+                    for i in range(len(array)):
+                        file.writelines(array[i][0] + ";" + array[i][1] + ";" + array[i][2] +"\n" )
+                
+            newPersonalRating = 0
+
+        personalRating = 0
+        lblGamPersonalRate = Label(newTop,text="Rate").place(x=50,y=540)
+    
+        cboxCombobox = Combobox(newTop,width=3,values=ratings,textvariable=personalRating,state="readonly")
+
+
+        cboxCombobox.place(x=80,y=540)
+        with open('./data/rating.txt',mode='r+', encoding="utf-8")as file:
+            personalRating = 0
+            
+            for line in file:
+                data=line.strip().split(";")
+
+                if data[0] == gameName and uname == data[1]:
+                    print(personalRating)
+                    personalRating = data[2]
+                    cboxCombobox.current(ratings[int(personalRating)-2])
+            
+        def addFavorite():
+            check = False
+            for fav in favs:
+                if fav == gameName:
+                    check = True
+            if not check:
+
+                favs.append(gameName)
+                arrayFav = []
+                with open('./data/users.txt',mode='r', encoding="utf-8")as file:
+                    for line in file:
+                        data=line.strip().split(";")
+                        arrayFav.append(data)
+                with open('./data/users.txt',mode='w+', encoding="utf-8")as file:
+                    print(arrayFav)
+                    for i in range(len(arrayFav)):
+                        
+    
+                        if uname == arrayFav[i][0]:
+                            string=""
+                            
+                            string=".".join(favs) 
+                            arrayFav[i][4] = string
+
+                        file.writelines(str(arrayFav[i][0]) + ";" + str(arrayFav[i][1]) + ";" + str(arrayFav[i][2]) +";"+ str(arrayFav[i][3]) +";"+ str(arrayFav[i][4]) + "\n")
+                btnFavorite.configure(text="Remove from favorites")
+            else:
+                removed=[]
+                for fav in favs:
+                    if fav == gameName:
+                        pos=favs.index(gameName)
+                        favs.pop(pos)
+                        if len(favs) == 0:
+                            favs.append("none")
+                arrayFav = []
+                with open('./data/users.txt',mode='r', encoding="utf-8")as file:
+                    for line in file:
+                        data=line.strip().split(";")
+                        arrayFav.append(data)
+                with open('./data/users.txt',mode='w+', encoding="utf-8")as file:
+                    print(arrayFav)
+                    for i in range(len(arrayFav)):
+                        
+    
+                        if uname == arrayFav[i][0]:
+                            
+                            string=".".join(favs) 
+                            arrayFav[i][4] = string
+
+                        file.writelines(str(arrayFav[i][0]) + ";" + str(arrayFav[i][1]) + ";" + str(arrayFav[i][2]) +";"+ str(arrayFav[i][3]) +";"+ str(arrayFav[i][4]) + "\n")
+                btnFavorite.configure(text="Add to Favorites")          
+
+        btnFavorite = Button(newTop,text="Add to Favorites",command=addFavorite)
+        btnFavorite. place(x=850, y=50)
+
+        btnSaveRate = Button(newTop,text="Save",command=saveRating)
+        btnSaveRate.place(x=140, y=537)
+
+        txtComment = Text(newTop,width=50,height=3)
+        txtComment.place(x=450,y=300)
+
+        def postComment():
+            newcontent=txtComment.get(1.0,END)
+            content = newcontent[0:-1]
+            dateA =str(dt.date.today())
+            comment = uname + "\t" + dateA + "\n" + str(content) + "\n\n"
+            with open('./data/comments.txt',mode='a', encoding="utf-8")as file:
+                
+                txtSeeComments.insert(END,comment)
+                file.writelines([gameName +';' + uname +';' + content+';' +dateA + "\n"])
+                
+
+        btnSubmit = Button(newTop,text="Post",command=postComment)
+        btnSubmit.place(x=870,y=320)
+        lblGameCat = Label(newTop,text="Genre:")
+        lblGameCat.place(x=255,y=540)
+        LabelGameCat = Label(newTop,text=gameCat)
+        LabelGameCat.place(x=300,y=540)
+        LabelGameDesc = Label(newTop,text=gameDesc,wraplength=500, justify="left")
+        LabelGameDesc.place(x=450,y=100)
+
+        txtSeeComments = Text(newTop,width=65,height=10,wrap=WORD)
+        txtSeeComments.place(x=450,y=400)
+        with open('./data/comments.txt', mode='r+', encoding="utf-8") as file:
+            comments = []
+            # jogo user comment data2
+            for line in file:
+                data=line.strip().split(";")
+                
+                if gameName== data[0]: 
+                    userComment = data[1]
+                    commentComment = data[2]
+                    dateComment = data[3]
+                    comment = userComment + "\t" + dateComment + "\n" + commentComment + "\n\n"
+                    txtSeeComments.insert(END,comment)
+                    comments.append(comment)  
+                
+                   
+        global img
+        
+        # canvasGameImage = Canvas(window,width=200, height= 300)
+        # canvasGameImage.place(x=100,y=100)
+        # img = ImageTk.PhotoImage(Image.open(gameImage))
+        # img = img.resize((200,300), Image.ANTIALIAS)
+        # img2 = ImageTk.PhotoImage(image=img2)
+        # finalImage = ImageTk.PhotoImage(img2)
+        # imgResized = img.resize((200,300),Image.ANTIALIAS)
+        # imgResized2 = ImageTk.PhotoImage(imgResized)
+        # canvasGameImage.create_image(0,0,image=gamesImages[0])
+        
+        
+        canvasGameImage = Canvas(newTop,width=350, height= 420, bg="NavajoWhite2",bd=0, relief="ridge",highlightthickness=0)
+        canvasGameImage.place(x=50,y=100)
+        img = ImageTk.PhotoImage(file=gameImage)
+        # imgResized = img.resize((200,300),Image.ANTIALIAS)
+        canvasGameImage.create_image(180,200,image=img)
+        
+        
+        searchPage.destroy()
+
+    btnViewGame = Button(searchPanedWindow,text="View",font = ("Arial Bold",12), width = 8 ,height = 2, command= viewGame)
+    btnViewGame.place(x=110,y=230)
     
 
 
@@ -407,6 +656,8 @@ def admin():
 
 
     def menu():
+
+        
         # widgets
         menu_frame = Frame(
             ws, 
@@ -437,7 +688,7 @@ def admin():
             text = "Games",
             font=f, 
             cursor='hand2',
-            command = lambda:[games(), menu_frame.place_forget()])
+            command = lambda:[games(), menu_frame.place_forget(),show_game()])
         places_btn = Button(
             menu_frame,
             width=12,
@@ -609,7 +860,7 @@ def admin():
             font=f, 
             
             cursor='hand2',
-            command=criar_categoria
+            command=lambda:[criar_categoria(),mostrar_categoria()]
         )
         delete_btn = Button(
             category_frame, 
@@ -618,17 +869,9 @@ def admin():
             font=f, 
             
             cursor='hand2',
-            command=apagar_categoria
+            command=lambda:[apagar_categoria(),mostrar_categoria()]
         )
-        showBtn = Button(
-            category_frame, 
-            width=15, 
-            text='Refresh', 
-            font=f, 
-        
-            cursor='hand2',
-            command=mostrar_categoria
-        )
+    
 
         back_btn = Button(
             category_frame, 
@@ -643,7 +886,6 @@ def admin():
     
         category_name.grid(row=0, column=1, pady=10, padx=20)
         create_category.grid(row=1, column=1, pady=10, padx=20)
-        showBtn.grid(row=1, column=0, pady=10, padx=20)
         delete_btn.grid(row=2, column=1, pady=10, padx=20)
 
         back_btn.grid(row = 2, column = 0, padx = 10, pady = 20)
@@ -800,16 +1042,6 @@ def admin():
             font=f,
             show='*'
         )
-        showBtn = Button(
-            users_frame, 
-            width=15, 
-            text='Refresh/Show', 
-            font=f, 
-        
-            cursor='hand2',
-            command=showAdmin
-        )
-
     
         register_btn = Button(
             users_frame, 
@@ -818,7 +1050,7 @@ def admin():
             font=f, 
         
             cursor='hand2',
-            command=createAdmin
+            command=lambda:[createAdmin(),showAdmin()]
         )
         back_btn = Button(
             users_frame, 
@@ -834,7 +1066,6 @@ def admin():
         register_pwd.grid(row=5, column=1, pady=10, padx=20)
         pwd_again.grid(row=6, column=1, pady=10, padx=20)
         register_btn.grid(row=7, column=1, pady=10, padx=20)
-        showBtn.grid(row=7, column=0, pady=10, padx=20)
         back_btn.grid(row=8, column=0, pady=10, padx=20)
         users_frame.place(relx=0.03, rely=0.15)
         main_users_frame.place(relx=0, rely=0)
@@ -1107,34 +1338,23 @@ def admin():
                 font=f, 
                 
                 cursor='hand2',
-                command=createGame
+                command=lambda:[createGame(),show_game()]
             )
-        showBtn = Button(
-            game_frame, 
-            width=15, 
-            text='Refresh', 
-            font=f, 
-            command=show_game,
-            cursor='hand2',
-            
-        )
         delete_btn = Button(
             game_frame, 
             width=15, 
             text='Delete', 
             font=f, 
-            command=delete_game,
-            cursor='hand2',
-            
+            command=lambda:[delete_game(),show_game()],
+            cursor='hand2'
         )
         att_btn = Button(
             game_frame, 
             width=15, 
             text='Alter', 
             font=f, 
-            command=att_game,
-            cursor='hand2',
-            
+            command=lambda:[att_game(),show_game()],
+            cursor='hand2'
         )
         gameExit = Button(
             game_frame,
@@ -1150,7 +1370,6 @@ def admin():
         imagem.grid(row=5, column=1, pady=10, padx=20)
         imagem_btn.grid(row=5, column=2, columnspan = 2, rowspan = 1, padx = 5, pady = 5)
         createGameBtn.grid(row=7, column=1, pady=10, padx=20)   
-        showBtn.grid(row=7, column=0, pady=10, padx=20)
         delete_btn.grid(row=8, column=0, pady=10, padx=20)
         att_btn.grid(row=8, column=1, pady=10, padx=20)
         gameExit.grid(row = 9, column = 0,
@@ -1308,7 +1527,6 @@ def homePage():
                     gameImage = data[2]
                     gameCat = data[3]
             
-        top.destroy()
         newTop = Toplevel()
         newTop.resizable(0,0)
         newTop.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x, y))
